@@ -12,6 +12,7 @@ author:
       country: Indonesia
 date: 2026-02-03
 date-modified: now
+abstract: 'Advances in cloud computing, as well as computational tools for extracting text from images, offer an opportunity to scale up the development of digital databases for Indigenous languages. This paper reports on the application of these advances to the digitalisation of old, paper-borne lexical items of over a hundred Indigenous languages in Indonesia; these items are part of the so-called [Holle List (HL)](http://hdl.handle.net/1885/144430). After introducing the (structure of the) HL, the paper underlines the motivation for the [HL digitalisation project](https://portal.sds.ox.ac.uk/projects/Digitised_Holle_List/259172). It then provides an overview of *[Google Colab](https://colab.research.google.com/)* as a free cloud-computing platform for executing a series of optical character recognition (OCR) operations on hundreds of scanned pages of the HL, utilising *[pytesseract](https://pypi.org/project/pytesseract/)*, a Python interface for *[Google’s Tesseract-OCR engine](https://github.com/tesseract-ocr/tesseract)*. Advantages (e.g., computational searchability and manipulability), as well as issues (especially typos and unrecognised characters) in the plain-text OCR outputs, are discussed. In conclusion, the paper highlights the importance of digital technology in conserving Indigenous languages via digital platforms, albeit some unavoidable challenges that require humans (linguistic and manual) intervention.'
 format:
     html: 
       page-layout: full
@@ -57,7 +58,7 @@ Digitalising the PDF into plain-text file using the *Tesseract* O(ptical) C(hara
 
 The PDF files for all eleven volumes of the Holle List series are available open access on the Open Research Repository of the Australian National University (ANU) library, under the [“ANU Asia-Pacific Linguistics/Pacific Linguistics Press” collection](https://openresearch-repository.anu.edu.au/collections/bbe2244b-212d-44b4-b33a-59048fd7e13f). The Holle List publications can be looked up using "Holle Lists" as the search term (see @fig-holle-list-search-output).
 
-![A snippet of the search results for the the Holle List publications on the ANU Open Research Repository](img/holle-list-search-results.png){#fig-holle-list-search-output}
+[![A snippet of the search results for the Holle List publications on the ANU Open Research Repository](img/holle-list-search-results.png){#fig-holle-list-search-output}](https://openresearch-repository.anu.edu.au/search?spc.page=1&query=Holle%20Lists&scope=bbe2244b-212d-44b4-b33a-59048fd7e13f)
 
 The PDF files for every volume was downloaded and uploaded onto the Google Drive of the Holle List project so that they are accessible when processed in the Google Colab coding environment.
 
