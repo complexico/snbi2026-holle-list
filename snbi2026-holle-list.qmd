@@ -1,0 +1,92 @@
+---
+title: "The Digitised Holle List Project: Building Database from Legacy Materials for Conserving Indigenous Indonesian Languages"
+title-prefix: "Digitsed Holle List"
+author: 
+  - name:
+      given: "Gede Primahadi Wijaya"
+      family: "Rajeg"
+    orcid: "0000-0002-2047-8621"
+    affiliation: 
+      id: unud
+      name: Universitas Udayana
+      country: Indonesia
+date: 2026-02-03
+date-modified: now
+format:
+    html: 
+      page-layout: full
+      number-sections: true
+      fig-width: 6
+      fig-asp: 0.618
+      fig-dpi: 300
+      code-fold: true
+      citations-hover: true
+      footnotes-hover: true
+      toc: true
+      toc-location: left
+      crossref: 
+        sec-prefix: §
+editor: visual
+bibliography: references.bib
+csl: apa7.csl
+google-scholar: true
+search: true
+---
+
+## Introduction {#sec-intro}
+
+This paper reports on a digital humanities project of digitalising and curating large volumes of word list, the so-called *Holle List vocabulary*. The Holle List vocabulary list was originated in the late 19^th^ century as a project by [Karel Frederik Holle](https://en.wikipedia.org/wiki/Karel_Holle), a Dutch colonial administrator. His aim was to gain knowledge about the linguistic situation of the Dutch East Indies of the present-day state of Indonesia. In the first edition of the Holle List [@holle1894], Holle set up a list of elicitation concepts (i.e., 905 concepts to be exact) in Dutch [@holle1894, 8-38] to be dispersed throughout the Indonesian archipelago. The goal was to collect the corresponding expressions/words of these elicited concepts (from various semantic domains) across over two hundreds indigenous regional language-varieties of Indonesia.
+
+Between 1980 and 1987, Stokhof and his colleagues edited, collated, and published different versions of the master, elicitation Holle List as well as the corresponding expressions in the available indigenous language-varieties into eleven-volume publication series. These publications are now available open access under the Creative Commons License (see @fig-holle-list-search-output in @sec-data-source-acquisition). There are two main parts of these publications: (i) the volume containing just the reference Holle List, that is the elicitation concepts and their index numbers in Dutch, English, and Indonesian/Malay, and (ii) the separate remaining volumes containing the expressions/words of the regional language-varieties and their index numbers; these index numbers correspond to the index numbers of the Dutch, English, and Indonesian translations/glosses in the reference Holle List. It is important to note that there is only one volume of the reference Holle List containing the Dutch, English, and Indonesian translations/glosses; the content of this reference volume is not repeated in the remaining volumes for the expressions/words in the regional language-varieties, but only the index numbers.
+
+In the above two-parts publication set-up, linguists, who are interested in knowing what the Dutch, English, and Indonesian glosses of *a* given word in *a* given regional language, must match the index number of that regional word with the same index number in the reference Holle List.
+
+There is an opportunity now to collate these two-parts publications into a digital cross-linguistic lexical database whereby the regional languages are matched with their corresponding Dutch, English, and Indonesian/Malay glosses.
+
+At the moment, the PDF file of the reference, master Holle List [@holleli1980] has been digitalised into computer-readable, searchable and manipulable database [@rajeg2023] and available online as a webpage at <https://engganolang.github.io/digitised-holle-list/>. This digital master Holle List was used to computationally match the regional word list for Enggano with the corresponding Dutch, English, and Indonesian glosses in the master Holle List [@rajeg2023eno].
+
+Why digitalise all? Provide large data for systematic computational historical linguistic analysis in finding relationship between language or diachronic changes of the same language, combining the older data set and the present-day, modern dataset. Other large scale analysis on collexification pattern (i.e., cross-language polysemy).
+
+How to scale-up the digitalisation process for all eleven volumes?
+
+Digitalising the PDF into plain-text file using the *Tesseract* O(ptical) C(haracter) R(ecognition) engine [@smith2007]. The process was run online using cloud computing platform “Google Colaboratory” [@google2026] (see @sec-data-source-processing for further details).
+
+## Methodology {#sec-method}
+
+### Data source acquisition {#sec-data-source-acquisition}
+
+The PDF files for all eleven volumes of the Holle List series are available open access on the Open Research Repository of the Australian National University (ANU) library, under the [“ANU Asia-Pacific Linguistics/Pacific Linguistics Press” collection](https://openresearch-repository.anu.edu.au/collections/bbe2244b-212d-44b4-b33a-59048fd7e13f). The Holle List publications can be looked up using "Holle Lists" as the search term (see @fig-holle-list-search-output).
+
+![A snippet of the search results for the the Holle List publications on the ANU Open Research Repository](img/holle-list-search-results.png){#fig-holle-list-search-output}
+
+The PDF files for every volume was downloaded and uploaded onto the Google Drive of the Holle List project so that they are accessible when processed in the Google Colab coding environment.
+
+### Data processing {#sec-data-source-processing}
+
+-   Create a Jupyter Notebook in the Google Colab for coding and executing the digitalisation of every PDF file of the Holle List.
+
+-   The digitalisation codes are written in the Python programming language. In particular, the Python package *pytesseract* [@hoffstaetter2024] is used to run the Tesseract-OCR engine and functionality.
+
+-   The execution and computation is not run locally on our laptop but on the cloud using the Central Processing Unit (CPU) and the memory provided by Google.
+
+## Results
+
+-   how does the OCR process look like?
+
+## Discussion
+
+-   ...
+
+-   Computational OCR let us obtain results relatively quickly
+
+    -   Pros: non-accented and unformatted (e.g., without underscore) Roman characters are generally well-represented in the OCR output. This means that the effort and time to re-type (or manually type) these well-recognised characters could be effectively reduced, with the focus is only scanning/checking.
+
+    -   Cons: not all characters are recognised correctly (example: )
+
+        -   opportunity: the editing phase of these unrecognised characters can be annotated, tracked and versioned for changes so that we can quantify which character(s) is consistently misrepresented [cf. @fomin2006, 84]
+
+## Conclusion
+
+We need to keep in mind that the regional language data represent the state of the language in the late 19th century and/or early 20th century. Other things to keep in mind is that there can be variation of orthography/spelling between investigators of different
+
+## References
