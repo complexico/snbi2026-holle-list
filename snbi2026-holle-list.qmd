@@ -61,17 +61,15 @@ knitr::include_graphics("img/matching-enggano-list.png")
 
 To understand what the Enggano word “èbaka” (ID number 3) refers to in Dutch, English, and Indonesian/Malay, one must look up the ID number 3 in the NBL. In this case, “èbaka” in Enggano refers to ‘*gezicht, aangezicht*’ in Dutch, ‘face’ in English, and ‘*muka*, *wajah*’ in Indonesian/Malay. Alternatively, from the perspective of the NBL, linguists could have asked how a given concept is lexicalised in a given language. For example, the concept of ‘*lichaam*’ or ‘body’ in English (and ‘*badan, tubuh*’ in Indonesian) (ID number 1 in the NBL) can be lexicalised by two forms in Enggano, as shown by those given for the ID number 1 in the Enggano list, viz. “kărāhā” and “koedŏdŏkŏ”.
 
-With such paper-based separate setup between elements of words and their translations, one could imagine the amount of manual back-and-forth procedure needed to link the words and their translations. The development of modern data science [@donoho2017] allows us to (i) conceive such setup as disjointed relational data with common keys, namely the index numbers present in both data set (the NBL and the given regional list), and (ii) computationally join them at scale once they are both in computer-readable format [see @wickham2023, Ch. 19, for the description of table-joining and its computational implementation in the R programming language].
+With such paper-based, separate setup between words in the regional languages and their translations, one could imagine the amount of manual back-and-forth procedure needed to link the words and their translations. The development of modern data science [@donoho2017] allows us to handle such a problem in a computational way. The Holle List setup can be conceived as disjointed relational data with common keys; these shared keys are the index numbers present in both data set (the NBL and the given regional list). Then, they can be computationally joined at scale once they are both in computer-readable format [see @wickham2023, Ch. 19, for the description of table-joining and its computational implementation in the R programming language].
 
-In order to tackle the problem of manual matching with a desiderata for computational matching between the NBL and the regional lists, the PDF file containing the NBL table [@holleli1980] has been digitalised into computer-readable, searchable and manipulable database [@rajeg2023] and available online as a webpage at <https://engganolang.github.io/digitised-holle-list/>. The computational joining of the translations in the digitalised NBL data into the regional list data is via the matching keys, viz. the index numbers. This digitalised NBL (in a tab-separated plain-text file) has first been implemented in joining the (also digitalised) regional word list for Enggano with the corresponding Dutch, English, and Indonesian glosses in the master Holle List [@rajeg2023eno; @rajeg2025].
+In order to tackle the problem of manual matching, with a desiderata for computational matching between the NBL and the regional lists, the PDF file containing the NBL table [@holleli1980] has been digitalised. The NBL list is now available as a computer-readable, searchable and manipulable database [@rajeg2023]; this is also available online as a webpage at <https://engganolang.github.io/digitised-holle-list/>. The joining of the translations in the digitalised NBL data into the regional list data is via the matching keys, viz. the index numbers. This digitalised NBL (in a tab-separated plain-text file) has first been implemented in joining the (also digitalised) regional word list for Enggano with the corresponding Dutch, English, and Indonesian glosses in the master Holle List [@rajeg2023eno; @rajeg2025].
 
-In addition, the motivation to digitalise the reference, master Holle List to envisage scaling-up the computational matching of the other regional Holle Lists once they have been also digitalised. This will enable the collation of these two-parts publications into a digital cross-linguistic lexical database whereby the regional languages are matched with their corresponding Dutch, English, and Indonesian/Malay glosses.
+Continuing the Enggano research, I envisaged the computational matching between the NBL and all words from the remaining regional languages in the Holle List. To achive this, the first step is to digitalise the other regional languages from the PDF files into plain texts. Since there are no less than 100 regional lists (comprising of ten volumes) in the Holle List, we need a way to scale-up the digitalisation process.
 
-Why digitalise all? Provide large data that open new possibilities for systematic computational historical linguistic analysis in finding relationship between language or diachronic changes of the same language, combining the older data set and the present-day, modern dataset. Other large scale analysis on collexification pattern (i.e., cross-language polysemy).
+This paper highlights the use of cloud computing platform, that is “Google Colaboratory” (<https://colab.google/>) [@google2026], to handle the computational resources (such as the Central Processing Unit and Memory) to run large-scale digitalisation process of many PDF files into into plain-text file. The software that performs the remediation from PDF to plain text is the *Tesseract* O(ptical) C(haracter) R(ecognition) engine [@smith2007] (see @sec-data-source-processing for further details). Once the digitalisation output of the regional lists has been checked (and tagged to separate each language in a PDF file), it is possible to computationally collate what was two-parts paper-borne publications into a digital cross-linguistic lexical database whereby the words in the regional languages are matched with their corresponding Dutch, English, and Indonesian/Malay glosses.
 
-How to scale-up the digitalisation process for all eleven volumes?
-
-Digitalising the PDF into plain-text file using the *Tesseract* O(ptical) C(haracter) R(ecognition) engine [@smith2007]. The process was run online using cloud computing platform “Google Colaboratory” [@google2026] (see @sec-data-source-processing for further details).
+The future potentials of these large lexical data are diverse. It will open new possibilities for systematic computational historical linguistic analysis in finding relationship between languages [@lai2023]. The database can also be used to study diachronic changes of the same language, combining the older data set and (if available) the present-day, modern dataset [@krauße; @rajeg2024]. In the area of lexical semantics, the database could be used to investigate collexification patterns (i.e., cross-language polysemy) [@clics2020; @françois2008]. Last but not least, the database contributes to the preservation of regional languages, especially the older varieties.
 
 ## Methodology {#sec-method}
 
@@ -81,15 +79,33 @@ The PDF files for all eleven volumes of the Holle List series are available open
 
 [![A snippet of the search results for the Holle List publications on the ANU Open Research Repository](img/holle-list-search-results.png){#fig-holle-list-search-output}](https://openresearch-repository.anu.edu.au/search?spc.page=1&query=Holle%20Lists&scope=bbe2244b-212d-44b4-b33a-59048fd7e13f)
 
-The PDF files for every volume was downloaded and uploaded onto the Google Drive of the Holle List project so that they are accessible when processed in the Google Colab coding environment.
+The PDF files for every volume was downloaded and uploaded onto the Google Drive of the Holle List project so that they are accessible when processed in the Google Colab coding environment. This is explained next.
 
 ### Data processing {#sec-data-source-processing}
 
--   Create a Jupyter Notebook in the Google Colab for coding and executing the digitalisation of every PDF file of the Holle List.
+To use Google Colab, one only needs to sign up for a Google Account (if they have not had one). After signing-in to one’s Google Account, go to <https://colab.google/> and choose the New Notebook option. A computational Jupyter Notebook will be created and stored in the Google Drive folder. This Notebook runs Python programming language (see @fig-jupyter-notebook). All computations for the digitalisation happened on this online, cloud computer on Google Colab.
 
--   The digitalisation codes are written in the Python programming language. In particular, the Python package *pytesseract* [@hoffstaetter2024] is used to run the Tesseract-OCR engine and functionality.
+![A snippet of an interface of the Jupyter Notebook in Google Colab](img/google-collab-notebook-interface.png){#fig-jupyter-notebook}
 
--   The execution and computation is not run locally on our laptop but on the cloud using the Central Processing Unit (CPU) and the memory provided by Google.
+The codes shown in @fig-jupyter-notebook are for installing relevant software in the remediation process from PDF into plain text. The *Tesseract OCR* engine (see the code `!sudo apt install tesseract-ocr`) as well as the Python package/module *pytesseract* [@hoffstaetter2024] were installed to allow access to *Tesseract* via Python. Before converting the PDF into plain text with the *pytesseract*, the PDF files need to be converted into images using the `pdf2image` module [@belval2024].
+
+The next step is to load the necessary functionality from the installed modules for PDF-to-text conversion, including a function that allows accessing the downloaded PDFs stored on Google Drive (cf. @fig-holle-list-search-output). This is shown in @fig-module-load.
+
+![Loading the relevant functions from the installed modules](img/google-colab-module-load.png){#fig-module-load}
+
+After loading the relevant functions by executing codes in @fig-module-load, we need to write custom Python codes for the digitalisation processes. An example is shown in @fig-python-ocr for the processing of the regional Holle List vol. 5.1 for the Papuan languages in the Digul Area, Irian Jaya/West Papua of Indonesia.
+
+![Custom Python codes for the digitalisation of the PDF into plain text](img/google-colab-digitalisation.png){#fig-python-ocr}
+
+Codes in the upper code block/box in @fig-python-ocr deal with converting the PDF into image by providing the Google Drive path of the PDF. After that come the codes in the lower code block/box in @fig-python-ocr. They cover (i) setting-up the parameters for the output format of the plain text, (ii) creating the main processing iteration to OCR each image page, and then (iii) saving the output into a plain text file (see the lower code block/box in @fig-python-ocr).
+
+Note that writing the codes does not mean that the codes are automatically executed/instructed to produce the output. To run the codes inside the code block, hover the mouse in the top-left area of the code block until a white rightward arrow (with black background) appears (see the point of the blue arrow in @fig-executing-code), then click on that white arrow to run the codes in that code block.
+
+![The execution of the codes using the graphical user interface button or keyboard shortcut](img/google-colab-running-code.png){#fig-executing-code}
+
+Alternatively, ensure the cursor is in the relevant code block and then use the keyboard stroke `Ctrl+Enter` to execute the codes in that code block.
+
+As mentioned in @sec-intro, the execution of these codes is not performed locally on our laptop but on the cloud using the Central Processing Unit (CPU) and the memory provided by the Google Colab.
 
 ## Results
 
