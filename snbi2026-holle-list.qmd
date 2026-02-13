@@ -65,11 +65,11 @@ With such paper-based, separate setup between words in the regional languages an
 
 In order to tackle the problem of manual matching, with a desiderata for computational matching between the NBL and the regional lists, the PDF file containing the NBL table [@holleli1980] has been digitalised. The NBL list is now available as a computer-readable, searchable and manipulable database [@rajeg2023]; this is also available online as a webpage at <https://engganolang.github.io/digitised-holle-list/>. The joining of the translations in the digitalised NBL data into the regional list data is via the matching keys, viz. the index numbers. This digitalised NBL (in a tab-separated plain-text file) has first been implemented in joining the (also digitalised) regional word list for Enggano with the corresponding Dutch, English, and Indonesian glosses in the master Holle List [@rajeg2023eno; @rajeg2025].
 
-Continuing the Enggano research, I envisaged the computational matching between the NBL and all words from the remaining regional languages in the Holle List. To achive this, the first step is to digitalise the other regional languages from the PDF files into plain texts. Since there are no less than 100 regional lists (comprising of ten volumes) in the Holle List, we need a way to scale-up the digitalisation process.
+Continuing the Enggano research, I envisaged the computational matching between the NBL and all words from the remaining regional languages in the Holle List. To achieve this, the first step is to digitalise the other regional languages from the PDF files into plain texts. Since there are no less than 100 regional lists (comprising of ten volumes) in the Holle List, we need a way to scale-up the digitalisation process.
 
-This paper highlights the use of cloud computing platform, that is “Google Colaboratory” (<https://colab.google/>) [@google2026], to handle the computational resources (such as the Central Processing Unit and Memory) to run large-scale digitalisation process of many PDF files into into plain-text file. The software that performs the remediation from PDF to plain text is the *Tesseract* O(ptical) C(haracter) R(ecognition) engine [@smith2007] (see @sec-data-source-processing for further details). Once the digitalisation output of the regional lists has been checked (and tagged to separate each language in a PDF file), it is possible to computationally collate what was two-parts paper-borne publications into a digital cross-linguistic lexical database whereby the words in the regional languages are matched with their corresponding Dutch, English, and Indonesian/Malay glosses.
+This paper highlights the use of cloud computing platform, that is “Google Colaboratory” (<https://colab.google/>) [@google2026], to handle the computational resources (such as the Central Processing Unit and Memory) to run large-scale digitalisation process of many PDF files into into plain-text file. The software that performs the remediation from PDF to plain text is the *Tesseract* O(ptical) C(haracter) R(ecognition) engine [@smith2007] (see @sec-data-source-processing for further details). Once the digitalisation output of the regional lists has been checked, edited for errors (cf. @sec-results) , and tagged to separate each language in the source PDF file, it is possible to computationally collate what was two-parts paper-borne publications into a digital cross-linguistic lexical database whereby the words in the regional languages are matched with their corresponding Dutch, English, and Indonesian/Malay glosses.
 
-The future potentials of these large lexical data are diverse. It will open new possibilities for systematic computational historical linguistic analysis in finding relationship between languages [@lai2023]. The database can also be used to study diachronic changes of the same language, combining the older data set and (if available) the present-day, modern dataset [@krauße; @rajeg2024]. In the area of lexical semantics, the database could be used to investigate collexification patterns (i.e., cross-language polysemy) [@clics2020; @françois2008]. Last but not least, the database contributes to the preservation of regional languages, especially the older varieties.
+The future potentials of these large lexical data are diverse. It will open new possibilities for systematic computational historical linguistic analysis in finding relationship between languages [@lai2023]. The database can also be used to study diachronic changes of the same language, combining the older data set and (if available) the present-day, modern dataset [@krauße; @rajeg2024]. In the area of lexical semantics, the database could be used to investigate collexification patterns (i.e., cross-language polysemy) [@clics2020; @françois2008]. Last but not least, the database contributes to the preservation of Indonesian regional languages, especially the older varieties.
 
 ## Methodology {#sec-method}
 
@@ -93,23 +93,63 @@ The next step is to load the necessary functionality from the installed modules 
 
 ![Loading the relevant functions from the installed modules](img/google-colab-module-load.png){#fig-module-load}
 
-After loading the relevant functions by executing codes in @fig-module-load, we need to write custom Python codes for the digitalisation processes. An example is shown in @fig-python-ocr for the processing of the regional Holle List vol. 5.1 for the Papuan languages in the Digul Area, Irian Jaya/West Papua of Indonesia.
+After loading the relevant functions by executing codes in @fig-module-load, we need to write custom Python codes for the digitalisation processes. An example is shown in @fig-python-ocr for the processing of the regional Holle List vol. 5/1 for the Papuan and Austronesian languages in the Digul Area, Irian Jaya/West Papua, Indonesia [@stokhof1982].
 
 ![Custom Python codes for the digitalisation of the PDF into plain text](img/google-colab-digitalisation.png){#fig-python-ocr}
 
-Codes in the upper code block/box in @fig-python-ocr deal with converting the PDF into image by providing the Google Drive path of the PDF. After that come the codes in the lower code block/box in @fig-python-ocr. They cover (i) setting-up the parameters for the output format of the plain text, (ii) creating the main processing iteration to OCR each image page, and then (iii) saving the output into a plain text file (see the lower code block/box in @fig-python-ocr).
+Codes in the upper code block/box in @fig-python-ocr deal with converting the PDF into image by providing the Google Drive path of the PDF. After that come the codes in the lower code block/box in @fig-python-ocr. They cover three aspects:
 
-Note that writing the codes does not mean that the codes are automatically executed/instructed to produce the output. To run the codes inside the code block, hover the mouse in the top-left area of the code block until a white rightward arrow (with black background) appears (see the point of the blue arrow in @fig-executing-code), then click on that white arrow to run the codes in that code block.
+1.  Setting-up the parameters or configuration for the output format of the plain text. Details can be found at <https://tesseract-ocr.github.io/tessdoc/Command-Line-Usage.html>
+2.  Creating the main processing iteration to convert the images into a single text file. This is shown from the code line containing `for i, image in enumerate(images):` up until the line stating `full_text += "\n\n"`.
+3.  Saving the output into a plain text file; this file is stored on a Google Drive folder chosen by the user. The code line shown in @fig-python-ocr indicates that the output is saved with the file name `HolleList-Vol-5-1-Irian-Jaya.txt` under a folder for the Vol. 5/1, which is in turn inside the `hollelist` sub-folder in my main Google Drive folder (`MyDrive`) (see @fig-ocr-output).
+
+![A Google Drive folder containing the plain-text (.txt) output of the OCR operation for the PDF of the Holle List vol. 5/1](img/digitalisation-output.png){#fig-ocr-output}
+
+Note that writing the codes as presented in @fig-python-ocr does not necessarily mean that the codes are automatically executed/instructed to produce the output. To run the codes inside a given code block, hover the mouse in the top-left area of the code block until a white rightward arrow (with black background) appears (see the point of the blue arrow in @fig-executing-code), then click on that white arrow.
 
 ![The execution of the codes using the graphical user interface button or keyboard shortcut](img/google-colab-running-code.png){#fig-executing-code}
 
-Alternatively, ensure the cursor is in the relevant code block and then use the keyboard stroke `Ctrl+Enter` to execute the codes in that code block.
+Alternatively, ensure the cursor is in the relevant code block and then use the keyboard shortcut `Ctrl+Enter` to execute the codes in that code block.
 
-As mentioned in @sec-intro, the execution of these codes is not performed locally on our laptop but on the cloud using the Central Processing Unit (CPU) and the memory provided by the Google Colab.
+As mentioned in @sec-intro, the execution of these codes is not performed locally on our laptop but online on the cloud, using the Central Processing Unit (CPU) and the memory provided by the Google Colab. It is also important to note that the conversion processes from image files into plain texts for a given volume could take more than one hour. In this study, I did not take note on the processing times for digitalising each volume because the primary goal is not to assess the efficiency and processing times.
 
-## Results
+## Results {#sec-results}
 
--   how does the OCR process look like?
+In this section, I present two sets of results from a single volume, namely the Holle List vol. 5/1 [@stokhof1982] for Austronesian and Papuan languages in the Digul area, Irian Jaya (West Papua). They illustrate the contrast of the quality of the conversion output, depending on the nature of the input-characters in the source PDF file. These two sets represent two different languages in that volume, namely Numfor [@stokhof1982, 17] and Digul Mappi (spoken in the area between the Digul river and the Mappi river) [@stokhof1982, 133].
+
+@fig-numfor-1 captures several words in Numfor in the PDF source file while @fig-numfor-2 shows their corresponding OCR conversion output in plain-text.
+
+```{r}
+#| label: fig-numfor
+#| fig-cap: "Snippets of the PDF source for the Numfor list and its corresponding plain-text format after the image-to-text conversion"
+#| fig-subcap: 
+#|   - "the PDF source [@stokhof1982, 17]"
+#|   - "the plain-text output"
+#| fig-cap-location: bottom
+#| out-width: "80%"
+#| layout-nrow: 2
+#| echo: hide
+
+knitr::include_graphics("img/numfor-pdf.png")
+knitr::include_graphics("img/numfor-txt.png")
+```
+
+The pair in @fig-numfor can now be contrasted with that for the Digul Mappi list in @fig-digulmappi.
+
+```{r}
+#| label: fig-digulmappi
+#| fig-cap: "Snippets of the PDF source for the Digul Mappi list and its corresponding plain-text format after the image-to-text conversion"
+#| fig-subcap: 
+#|   - "the PDF source [@stokhof1982, 133]"
+#|   - "the plain-text output"
+#| fig-cap-location: bottom
+#| out-width: "80%"
+#| layout-nrow: 2
+#| echo: hide
+
+knitr::include_graphics("img/digul-mappi-pdf.png")
+knitr::include_graphics("img/digul-mappi-txt.png")
+```
 
 ## Discussion
 
