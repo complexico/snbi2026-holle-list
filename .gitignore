@@ -6,4 +6,6 @@ snbi2026-holle-list_files/
 .DS_Store
 *.html
 *.docx
+*.pdf
 data/vol8.txt
+_extensions*
