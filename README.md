@@ -2,6 +2,12 @@
 
 [Gede Primahadi Wijaya Rajeg](https://orcid.org/0000-0002-2047-8621)
 
+## How to cite
+
+Please cite this repository as follows (in APA):
+
+> Rajeg, G. P. W. (2026). Supplementary materials for “The Digitised Holle List Project: Building a Database from Legacy Materials for Conserving Indigenous Indonesian Languages” (Version 1.0.0) [Computer software]. https://github.com/complexico/snbi2026-holle-list
+
 ## Overview
 
 The repository for the source Quarto document, interweaving texts and R codes, as well as the data files for the writing of a proceeding paper titled “The Digitised Holle List Project: Building a Database from Legacy Materials for Conserving Indigenous Indonesian Languages” to be presented at [_Seminar Nasional Bahasa Ibu (SNBI) XVIII 2026_](https://snbi2025.my.canva.site/).
