@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Gede Primahadi Wijaya Rajeg">
+<meta name="dcterms.date" content="2026-02-03">
+
+<title>The Digitised Holle List Project: Building a Database from Legacy Materials for Conserving Indigenous Indonesian Languages – Digitsed Holle List</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="snbi2026-holle-list_files/libs/clipboard/clipboard.min.js"></script>
+<script src="snbi2026-holle-list_files/libs/quarto-html/quarto.js"></script>
+<script src="snbi2026-holle-list_files/libs/quarto-html/popper.min.js"></script>
+<script src="snbi2026-holle-list_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="snbi2026-holle-list_files/libs/quarto-html/anchor.min.js"></script>
+<link href="snbi2026-holle-list_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="snbi2026-holle-list_files/libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="snbi2026-holle-list_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="snbi2026-holle-list_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="snbi2026-holle-list_files/libs/bootstrap/bootstrap-8a79a254b8e706d3c925cde0a310d4f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+<meta name="citation_title" content="The Digitised Holle List Project: Building a Database from Legacy Materials for Conserving Indigenous Indonesian Languages">
+<meta name="citation_abstract" content="Advances in cloud computing, as well as computational tools for extracting text from images, offer an opportunity to scale up the development of digital databases for Indigenous languages. This paper reports on the application of these advances to the digitalisation of old, paper-based lexical items of over a hundred Indigenous languages in Indonesia; these items are part of the so-called [Holle List (HL)](http://hdl.handle.net/1885/144430). After introducing the (structure of the) HL, the paper underlines the motivation for the [HL digitalisation project](https://portal.sds.ox.ac.uk/projects/Digitised_Holle_List/259172). It then provides an overview of *[Google Colab](https://colab.research.google.com/)* as a free cloud-computing platform for executing a series of optical character recognition (OCR) operations on hundreds of scanned pages of the HL, utilising *[pytesseract](https://pypi.org/project/pytesseract/)*, a Python interface for *[Google’s Tesseract-OCR engine](https://github.com/tesseract-ocr/tesseract)*. Advantages (e.g., computational searchability and manipulability), as well as issues (especially typos and unrecognised characters) in the plain-text OCR outputs, are discussed. In conclusion, the paper highlights the importance of digital technology in conserving Indigenous languages via digital platforms, despite some unavoidable challenges that require human intervention.
+
+_**Keywords**_: _Holle List; Indigenous Indonesian languages; Digital Humanities; Lexical databases_
+">
+<meta name="citation_author" content="Gede Primahadi Wijaya Rajeg">
+<meta name="citation_publication_date" content="2026-02-03">
+<meta name="citation_cover_date" content="2026-02-03">
+<meta name="citation_year" content="2026">
+<meta name="citation_online_date" content="2026-02-03">
+<meta name="citation_language" content="en">
+<meta name="citation_reference" content="citation_title=Digitizing a dictionary of Medieval Irish: The eDIL Project;,citation_author=Maxim Fomin;,citation_author=Gregory Toner;,citation_publication_date=2006-04-01;,citation_cover_date=2006-04-01;,citation_year=2006;,citation_fulltext_html_url=https://doi.org/10.1093/llc/fqh050;,citation_issue=1;,citation_doi=10.1093/llc/fqh050;,citation_volume=21;,citation_journal_title=Literary and Linguistic Computing;">
+<meta name="citation_reference" content="citation_title=Lexical tectonics: Mapping structural change in patterns of lexification;,citation_abstract=Whether it is based on philological data or on reconstruction, historical linguistics formulates etymological hypotheses that entail changes both in form and in meaning. Semantic change can be understood as a change in “patterns of lexification”, i. e., correspondences between forms and senses. Thus a polysemous word, which once lexified senses s1–s2–s3, evolves so it later encodes s2–s3–s4. Meanings that used to be colexified are now dislexified, and vice versa. Leaning on empirical data from Romance and from Oceanic, this study outlines a general model of historical lexicology, and identifies five types of structural innovations in the lexicon: split, merger, competition, shift, and relexification. The theoretical discussion is made easier by using a visual approach to structural change, in the form of diachronic maps. Semantic maps have already proven useful to represent synchronic patterns of lexification, outlining each language’s emic categories against a grid of etic senses. The same principle can be profitably used when analysing lexification patterns in diachrony: lexical change is then viewed as the reconfiguration of sense clusters in a semantic space. Maps help us visualize the “lexical tectonics” at play as words evolve over time, gradually shifting their meaning, gaining or losing semantic territory, colliding with each other, or disappearing forever.;,citation_author=Alexandre François;,citation_publication_date=2022-06-01;,citation_cover_date=2022-06-01;,citation_year=2022;,citation_fulltext_html_url=https://www.degruyter.com/document/doi/10.1515/zfs-2021-2041/html;,citation_issue=1;,citation_doi=10.1515/zfs-2021-2041;,citation_issn=1613-3706;,citation_volume=41;,citation_language=en-US;,citation_journal_title=Zeitschrift für Sprachwissenschaft;,citation_publisher=De Gruyter;">
+<meta name="citation_reference" content="citation_title=An Overview of the Tesseract OCR Engine;,citation_author=Ray Smith;,citation_publication_date=2007-09;,citation_cover_date=2007-09;,citation_year=2007;,citation_fulltext_html_url=http://ieeexplore.ieee.org/document/4376991/;,citation_doi=10.1109/ICDAR.2007.4376991;,citation_isbn=978-0-7695-2822-9;,citation_issn=1520-5363;,citation_volume=2;,citation_conference_title=Ninth International Conference on Document Analysis and Recognition (ICDAR 2007);,citation_conference=IEEE;">
+<meta name="citation_reference" content="citation_title=Google Colaboratory;,citation_author=undefined Google;,citation_publication_date=2026;,citation_cover_date=2026;,citation_year=2026;,citation_fulltext_html_url=https://colab.google/;,citation_language=en;">
+<meta name="citation_reference" content="citation_title=pytesseract: A python wrapper for Google’s Tesseract-OCR;,citation_author=Samuel Hoffstaetter;,citation_publication_date=2024-08-16;,citation_cover_date=2024-08-16;,citation_year=2024;,citation_fulltext_html_url=https://pypi.org/project/pytesseract/;">
+<meta name="citation_reference" content="citation_title=Blanco woordenlijst;,citation_author=Karel Frederik Holle;,citation_publication_date=1894;,citation_cover_date=1894;,citation_year=1894;,citation_fulltext_html_url=https://hdl.handle.net/2027/coo.31924023363215;">
+<meta name="citation_reference" content="citation_title=Holle lists, vocabularies in languages of indonesia, vol. 1: Introductory volume;,citation_editor=W. A. L. Stokhof;,citation_publication_date=1980;,citation_cover_date=1980;,citation_year=1980;,citation_fulltext_html_url=http://hdl.handle.net/1885/144430;,citation_doi=10.15144/PL-D17;,citation_volume=Materials in Languages of Indonesia;">
+<meta name="citation_reference" content="citation_title=Holle lists, vocabularies in languages of Indonesia, Vol. 5/1: Irian Jaya: Austronesian languages; Papuan languages, Digul area;,citation_editor=W. A. L. Stokhof;,citation_editor=Lia Saleh-Bronckhorst;,citation_editor=Alma E. Almanar;,citation_publication_date=1982;,citation_cover_date=1982;,citation_year=1982;,citation_fulltext_html_url=http://hdl.handle.net/1885/144577;,citation_volume=Materials in Languages of Indonesia;,citation_language=en-US;">
+<meta name="citation_reference" content="citation_title=Holle lists: Vocabularies in languages of indonesia, vol. 10/3: Islands off the west coast of sumatra;,citation_editor=W. A. L. Stokhof;,citation_editor=Alma E. Almanar;,citation_publication_date=1987;,citation_cover_date=1987;,citation_year=1987;,citation_fulltext_html_url=http://hdl.handle.net/1885/144589;,citation_volume=Materials in Languages of Indonesia;,citation_series_title=Pacific linguistics (series d);">
+<meta name="citation_reference" content="citation_title=Digitised, searchable Holle List in Stokhof (1980);,citation_author=Gede Primahadi Wijaya Rajeg;,citation_publication_date=2023-08-02;,citation_cover_date=2023-08-02;,citation_year=2023;,citation_fulltext_html_url=https://github.com/engganolang/digitised-holle-list;,citation_doi=10.25446/oxford.23205173;">
+<meta name="citation_reference" content="citation_title=CLDF dataset of the Enggano word list from 1895 in Stokhof and Almanar’s (1987) Holle List;,citation_author=Gede Primahadi Wijaya Rajeg;,citation_publication_date=2023-05-26;,citation_cover_date=2023-05-26;,citation_year=2023;,citation_doi=10.25446/oxford.23515788;,citation_language=en;">
+<meta name="citation_reference" content="citation_title=The data science behind the curation of the Holle List: A case study from the Enggano Holle List and its neighbouring Barrier Islands Languages;,citation_abstract=This research was presented in the Oceanic and Southeast Asian Navigators (OCSEAN) Conference at the Faculty of Humanities, Udayana University, Bali, Indonesia (21-22 July 2025). Our talk (and others in both days of the conference) was live-streamed and can be watched from this URL. The topic concerns the curation of the Holle List (see the digital reference database here) and its associated regional lists, particularly the Enggano list and the neighbouring Barrier Islands Languages of Sumatra, Indonesia.Student contributors who help digitise the remaining Holle List of the Barrier Islands Languages are mentioned below in the Contributor section.;,citation_author=Gede Primahadi Wijaya Rajeg;,citation_author=I Wayan Arka;,citation_author=Cokorda Rai Adi Pramartha;,citation_author=Engga Zakaria Sangian;,citation_publication_date=2025;,citation_cover_date=2025;,citation_year=2025;,citation_fulltext_html_url=https://portal.sds.ox.ac.uk/articles/presentation/The_data_science_behind_the_curation_of_the_Holle_List_A_case_study_from_the_Enggano_Holle_List_and_its_neighbouring_Barrier_Islands_Languages/29625407/1;,citation_doi=10.25446/oxford.29625407.v1;,citation_language=en-US;,citation_publisher=University of Oxford;">
+<meta name="citation_reference" content="citation_title=50 years of data science;,citation_author=David Donoho;,citation_publication_date=2017-10-02;,citation_cover_date=2017-10-02;,citation_year=2017;,citation_fulltext_html_url=https://doi.org/10.1080/10618600.2017.1384734;,citation_issue=4;,citation_doi=10.1080/10618600.2017.1384734;,citation_volume=26;,citation_journal_title=Journal of Computational and Graphical Statistics;">
+<meta name="citation_reference" content="citation_title=R for data science: Import, tidy, transform, visualize, and model data;,citation_author=Hadley Wickham;,citation_author=Mine Çetinkaya-Rundel;,citation_author=Garrett Grolemund;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://r4ds.hadley.nz/;">
+<meta name="citation_reference" content="citation_title=The Database of Cross-Linguistic Colexifications, reproducible analysis of cross-linguistic polysemies;,citation_abstract=Advances in computer-assisted linguistic research have been greatly influential in reshaping linguistic research. With the increasing availability of interconnected datasets created and curated by researchers, more and more interwoven questions can now be investigated. Such advances, however, are bringing high requirements in terms of rigorousness for preparing and curating datasets. Here we present CLICS, a Database of Cross-Linguistic Colexifications (CLICS). CLICS tackles interconnected interdisciplinary research questions about the colexification of words across semantic categories in the world’s languages, and show-cases best practices for preparing data for cross-linguistic research. This is done by addressing shortcomings of an earlier version of the database, CLICS2, and by supplying an updated version with CLICS3, which massively increases the size and scope of the project. We provide tools and guidelines for this purpose and discuss insights resulting from organizing student tasks for database updates.;,citation_author=Christoph Rzymski;,citation_author=Tiago Tresoldi;,citation_author=Simon J. Greenhill;,citation_author=Mei-Shin Wu;,citation_author=Nathanael E. Schweikhard;,citation_author=Maria Koptjevskaja-Tamm;,citation_author=Volker Gast;,citation_author=Timotheus A. Bodt;,citation_author=Abbie Hantgan;,citation_author=Gereon A. Kaiping;,citation_author=Sophie Chang;,citation_author=Yunfan Lai;,citation_author=Natalia Morozova;,citation_author=Heini Arjava;,citation_author=Nataliia Hübler;,citation_author=Ezequiel Koile;,citation_author=Steve Pepper;,citation_author=Mariann Proos;,citation_author=Briana Van Epps;,citation_author=Ingrid Blanco;,citation_author=Carolin Hundt;,citation_author=Sergei Monakhov;,citation_author=Kristina Pianykh;,citation_author=Sallona Ramesh;,citation_author=Russell D. Gray;,citation_author=Robert Forkel;,citation_author=Johann-Mattis List;,citation_publication_date=2020-01-13;,citation_cover_date=2020-01-13;,citation_year=2020;,citation_fulltext_html_url=https://www.nature.com/articles/s41597-019-0341-x;,citation_issue=1, 1;,citation_doi=10.1038/s41597-019-0341-x;,citation_issn=2052-4463;,citation_volume=7;,citation_language=en-US;,citation_journal_title=Scientific Data;,citation_journal_abbrev=Sci Data;,citation_publisher=Nature Publishing Group;">
+<meta name="citation_reference" content="citation_title=Semantic maps and the typology of colexification: Intertwining polysemous networks across languages;,citation_author=Alexandre François;,citation_editor=Martine Vanhove;,citation_publication_date=2008;,citation_cover_date=2008;,citation_year=2008;,citation_doi=10.1075/slcs.106.09fra;,citation_language=en;,citation_inbook_title=undefined;">
+<meta name="citation_reference" content="citation_title=EnoLEX: A diachronic lexical database for the Enggano language;,citation_author=Daniel Krauße;,citation_author=Gede Primahadi Wijaya Rajeg;,citation_author=Cokorda Rai Adi Pramartha;,citation_author=Erik Zobel;,citation_author=Bernd Nothofer;,citation_author=Charlotte Hemmings;,citation_author=Sarah Ogilvie;,citation_author=I Wayan Arka;,citation_author=Mary Dalrymple;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_doi=10.25446/oxford.28282169.v1;,citation_language=en;">
+<meta name="citation_reference" content="citation_title=EnoLEX: A diachronic lexical database for the Enggano language;,citation_author=Gede Primahadi Wijaya Rajeg;,citation_author=Daniel Krauße;,citation_author=Cokorda Pramartha;,citation_editor=Ai Inoue;,citation_editor=Naho Kawamoto;,citation_editor=Makoto Sumiyoshi;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_fulltext_html_url=https://portal.sds.ox.ac.uk/articles/conference_contribution/EnoLEX_A_diachronic_lexical_database_for_the_Enggano_language/27013864;,citation_doi=10.25446/oxford.27013864;,citation_conference_title=AsiaLex 2024 Proceedings: Asian Lexicography - Merging cutting-edge and established approaches;">
+<meta name="citation_reference" content="citation_title=Lexical data for the historical comparison of Rgyalrongic languages;,citation_author=Yunfan Lai;,citation_author=Johann-Mattis List;,citation_publication_date=2023-10-18;,citation_cover_date=2023-10-18;,citation_year=2023;,citation_fulltext_html_url=https://open-research-europe.ec.europa.eu/articles/3-99/v2;,citation_doi=10.12688/openreseurope.16017.2;,citation_volume=3;,citation_language=en;,citation_journal_title=Open Research Europe;">
+<meta name="citation_reference" content="citation_title=Pdf2image: A wrapper around the pdftoppm and pdftocairo command line tools to convert PDF to a PIL Image list.;,citation_author=Edouard Belval;,citation_publication_date=2024-01-08;,citation_cover_date=2024-01-08;,citation_year=2024;,citation_fulltext_html_url=https://badge.fury.io/py/pdf2image;">
+<meta name="citation_reference" content="citation_title=The Digital Humanities coursebook: An introduction to digital methods for research and scholarship;,citation_author=Johanna Drucker;,citation_publication_date=2021-03-24;,citation_cover_date=2021-03-24;,citation_year=2021;,citation_doi=10.4324/9781003106531;">
+<meta name="citation_reference" content="citation_title=The digitised and annotated Holle List of the Barrier Islands languages, off the west coast of Sumatra, Indonesia;,citation_author=Gede Primahadi Wijaya Rajeg;,citation_author=I Wayan Arka;,citation_publication_date=2025;,citation_cover_date=2025;,citation_year=2025;,citation_fulltext_html_url=https://github.com/complexico/holle-list-barrier-islands;,citation_doi=10.17605/OSF.IO/P8A3R;,citation_publisher=Open Science Framework (OSF);">
+<meta name="citation_reference" content="citation_title=Group Work in the Lexicography Class for the Holle List of the Barrier Islands Languages of Indonesia;,citation_author=Gede Primahadi Wijaya Rajeg;,citation_author=I Wayan Arka;,citation_publication_date=2025-02;,citation_cover_date=2025-02;,citation_year=2025;,citation_fulltext_html_url=https://github.com/complexico/lexico-holle-list-barrier-islands;,citation_doi=10.17605/OSF.IO/7TQG6;">
+<meta name="citation_reference" content="citation_title=Holle lists: Vocabularies in languages of indonesia, vol. 10/3: Islands off the west coast of sumatra;,citation_author=W. A. L. Stokhof;,citation_author=Alma E. Almanar;,citation_publication_date=1987;,citation_cover_date=1987;,citation_year=1987;,citation_fulltext_html_url=http://hdl.handle.net/1885/144589;,citation_volume=Materials in Languages of Indonesia;,citation_series_title=Pacific linguistics (series d);">
+<meta name="citation_reference" content="citation_title=Digital initiatives for indigenous languages;,citation_author=Genner Llanes-Ortiz;,citation_publication_date=2023;,citation_cover_date=2023;,citation_year=2023;,citation_fulltext_html_url=https://unesdoc.unesco.org/ark:/48223/pf0000387186;">
+<meta name="citation_reference" content="citation_title=Holle lists, vocabularies in languages of Indonesia, Vol. 8: Kalimantan (Borneo);,citation_editor=W. A. L. Stokhof;,citation_editor=Alma E. Almanar;,citation_publication_date=1986;,citation_cover_date=1986;,citation_year=1986;,citation_fulltext_html_url=http://hdl.handle.net/1885/144584;,citation_doi=10.15144/PL-D69;,citation_isbn=978-0-85883-336-4;,citation_language=en-US;,citation_series_title=Materials in Languages of Indonesia;">
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-intro" id="toc-sec-intro" class="nav-link active" data-scroll-target="#sec-intro"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#sec-method" id="toc-sec-method" class="nav-link" data-scroll-target="#sec-method"><span class="header-section-number">2</span> Methodology</a>
+  <ul class="collapse">
+  <li><a href="#sec-data-source-acquisition" id="toc-sec-data-source-acquisition" class="nav-link" data-scroll-target="#sec-data-source-acquisition"><span class="header-section-number">2.1</span> Data source acquisition</a></li>
+  <li><a href="#sec-data-source-processing" id="toc-sec-data-source-processing" class="nav-link" data-scroll-target="#sec-data-source-processing"><span class="header-section-number">2.2</span> Data processing</a></li>
+  </ul></li>
+  <li><a href="#sec-results" id="toc-sec-results" class="nav-link" data-scroll-target="#sec-results"><span class="header-section-number">3</span> Results</a></li>
+  <li><a href="#sec-discussion" id="toc-sec-discussion" class="nav-link" data-scroll-target="#sec-discussion"><span class="header-section-number">4</span> Discussion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5</span> Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">6</span> References</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="snbi2026-holle-list.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">The Digitised Holle List Project: Building a Database from Legacy Materials for Conserving Indigenous Indonesian Languages</h1>
+</div>
+
+
+<div class="quarto-title-meta-author column-page-right">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliations</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Gede Primahadi Wijaya Rajeg <a href="mailto:primahadi_wijaya@unud.ac.id" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-2047-8621" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            <a href="https://www.cirhss.org/complexico/">CompLexico research group</a>
+          </p>
+        <p class="affiliation">
+            Universitas Udayana
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta column-page-right">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 3, 2026</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">February 17, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    <p>Advances in cloud computing, as well as computational tools for extracting text from images, offer an opportunity to scale up the development of digital databases for Indigenous languages. This paper reports on the application of these advances to the digitalisation of old, paper-based lexical items of over a hundred Indigenous languages in Indonesia; these items are part of the so-called <a href="http://hdl.handle.net/1885/144430">Holle List (HL)</a>. After introducing the (structure of the) HL, the paper underlines the motivation for the <a href="https://portal.sds.ox.ac.uk/projects/Digitised_Holle_List/259172">HL digitalisation project</a>. It then provides an overview of <em><a href="https://colab.research.google.com/">Google Colab</a></em> as a free cloud-computing platform for executing a series of optical character recognition (OCR) operations on hundreds of scanned pages of the HL, utilising <em><a href="https://pypi.org/project/pytesseract/">pytesseract</a></em>, a Python interface for <em><a href="https://github.com/tesseract-ocr/tesseract">Google’s Tesseract-OCR engine</a></em>. Advantages (e.g., computational searchability and manipulability), as well as issues (especially typos and unrecognised characters) in the plain-text OCR outputs, are discussed. In conclusion, the paper highlights the importance of digital technology in conserving Indigenous languages via digital platforms, despite some unavoidable challenges that require human intervention.</p>
+    <p><em><strong>Keywords</strong></em>: <em>Holle List; Indigenous Indonesian languages; Digital Humanities; Lexical databases</em></p>
+  </div>
+</div>
+
+
+</header>
+
+
+<section id="sec-intro" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="sec-intro"><span class="header-section-number">1</span> Introduction</h2>
+<p>This paper reports on a Digital Humanities <span class="citation" data-cites="drucker2021">(<a href="#ref-drucker2021" role="doc-biblioref">Drucker, 2021</a>)</span> project of digitalising and curating large volumes of word lists, the so-called <em>Holle List vocabulary</em>. The Holle List project was initiated in the late 19<sup>th</sup> century by <a href="https://en.wikipedia.org/wiki/Karel_Holle">Karel Frederik Holle</a>, a Dutch colonial administrator. His aim was to gain knowledge about the linguistic situation of the Dutch East Indies, corresponding to the present-day state of Indonesia. In the first edition of the Holle List <span class="citation" data-cites="holle1894">(<a href="#ref-holle1894" role="doc-biblioref">Holle, 1894</a>)</span>, K. F. Holle set up a list of elicitation concepts (i.e., 905 concepts to be exact) given in Dutch <span class="citation" data-cites="holle1894">(<a href="#ref-holle1894" role="doc-biblioref">Holle, 1894, pp. 8–38</a>)</span>. This list was distributed throughout the Indonesian archipelago. The goal was to collect the corresponding expressions/words of these elicited concepts (from various semantic domains) across more than two hundred indigenous regional language varieties in Indonesia.</p>
+<p>Between 1980 and 1987, W. A. L. Stokhof and colleagues (viz.&nbsp;Lia Saleh-Bronckhorst and Alma E. Almanar) edited, collated, and published (i) the different versions of the reference/master, elicitation Holle List as well as (ii) the corresponding expressions/words in the regional language-varieties into an eleven-volume publication series<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. These publications are available as open access under the Creative Commons License (see <a href="#fig-holle-list-search-output" class="quarto-xref">Figure&nbsp;2</a> in <a href="#sec-data-source-acquisition" class="quarto-xref">§&nbsp;2.1</a>). These publications consist of two main parts. The first one is the volume containing just the reference (or master) Holle List <span class="citation" data-cites="holleli1980">(<a href="#ref-holleli1980" role="doc-biblioref">Stokhof, 1980</a>)</span>, comprising elicitation concepts given in Dutch, English, and Indonesian/Malay together with their index numbers (see <a href="#fig-matching-master-and-regional-1" class="quarto-xref">Figure&nbsp;1 (a)</a>); this is called <em>The New Basic List</em> (hereafter NBL) in Stokhof <span class="citation" data-cites="holleli1980">(<a href="#ref-holleli1980" role="doc-biblioref">1980</a>)</span> because Stokhof and colleagues collated three different versions of the Holle List (namely those published in 1894, 1904/1911, and 1931; see <a href="#fig-matching-master-and-regional-1" class="quarto-xref">Figure&nbsp;1 (a)</a>). The second part of the Holle List publications is the separate volumes containing the expressions/words of the regional language-varieties and their index numbers (see <a href="#fig-matching-master-and-regional-2" class="quarto-xref">Figure&nbsp;1 (b)</a> for an example from the Enggano language); these index numbers for words in the regional language-varieties correspond to the index numbers of the concepts in the reference Holle List/NBL. It is important to note that there is only one volume of the NBL; the content of the NBL is not repeated in the remaining volumes for the expressions/words in the regional language-varieties, but only the index numbers.</p>
+<p>In the above two-part publication setup, linguists, who are interested in the Dutch, English, and Indonesian/Malay translations of <em>a</em> given word in <em>a</em> given regional language, must manually match the index number of that regional word with the corresponding index number in the reference Holle List. Let us use the data snippet in <a href="#fig-matching-master-and-regional" class="quarto-xref">Figure&nbsp;1</a> as an example.</p>
+<div class="cell" data-layout-nrow="2" data-layout-align="center" data-fig-cap-location="bottom">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"img/matching-master-list.png"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"img/matching-enggano-list.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-matching-master-and-regional" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-matching-master-and-regional-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-matching-master-and-regional" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-matching-master-and-regional-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-matching-master-and-regional-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/matching-master-list.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%" data-ref-parent="fig-matching-master-and-regional">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-matching-master-and-regional-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) the reference Holle List/NBL <span class="citation" data-cites="holleli1980">(<a href="#ref-holleli1980" role="doc-biblioref">Stokhof, 1980</a>)</span>
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-matching-master-and-regional" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-matching-master-and-regional-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-matching-master-and-regional-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/matching-enggano-list.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%" data-ref-parent="fig-matching-master-and-regional">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-matching-master-and-regional-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Enggano regional list <span class="citation" data-cites="holle-list-barrier-islands">(<a href="#ref-holle-list-barrier-islands" role="doc-biblioref">Stokhof &amp; Almanar, 1987</a>)</span>
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-matching-master-and-regional-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Correspondence between index numbers of the regional list of Enggano and of the reference Holle List (or the New Basic List [NBL]).
+</figcaption>
+</figure>
+</div>
+</div>
+<p>Consider the Enggano word <em>èbaka</em> (ID number 3 in <a href="#fig-matching-master-and-regional-2" class="quarto-xref">Figure&nbsp;1 (b)</a>). To understand what the word refers to in Dutch, English, and Indonesian/Malay, one must look up the ID number 3 in the separate NBL publication (<a href="#fig-matching-master-and-regional-1" class="quarto-xref">Figure&nbsp;1 (a)</a>). In this case, <em>èbaka</em> in Enggano refers to ‘<em>gezicht, aangezicht</em>’ in Dutch, ‘face’ in English, and ‘<em>muka, wajah</em>’ in Indonesian/Malay. Alternatively, from the perspective of the NBL, linguists could have asked how a given concept is lexicalised in a given language. For example, the concept of ‘<em>lichaam</em>’ or ‘body’ in English (and ‘<em>badan, tubuh</em>’ in Indonesian) (ID number 1 in the NBL) can be lexicalised by two forms in Enggano, as shown by those given for the ID number 1 in the Enggano list, viz.&nbsp;<em>kărāhā</em> and <em>koedŏdŏkŏ</em> (cf. <a href="#tbl-land" class="quarto-xref">Table&nbsp;3</a> and <a href="#tbl-borneo-land" class="quarto-xref">Table&nbsp;4</a>).</p>
+<p>With such paper-based, separate arrangement between words in the regional language-varieties and their translations, one could imagine the amount of manual back-and-forth procedure needed to link the words and their translations. The development of modern data science <span class="citation" data-cites="donoho2017">(<a href="#ref-donoho2017" role="doc-biblioref">Donoho, 2017</a>)</span> allows us to navigate such a problem predominantly in a computational manner. The Holle List setup can be conceived as disjointed relational data with common keys; these shared keys are the index numbers present in both datasets (the NBL and the given regional list). Then, they can be computationally joined at scale once they are both in computer-readable format <span class="citation" data-cites="wickham2023">(see <a href="#ref-wickham2023" role="doc-biblioref">Wickham et al., 2023</a>, Ch. 19, for the description of table-joining and its computational implementation in the R programming language)</span>.</p>
+<p>In order to tackle the problem of manual matching, with a desideratum for computational matching between the NBL and the regional lists, the PDF file containing the NBL table <span class="citation" data-cites="holleli1980">(<a href="#ref-holleli1980" role="doc-biblioref">Stokhof, 1980</a>)</span> has been digitalised. The NBL is now available as a computer-readable, searchable, and manipulable database <span class="citation" data-cites="rajeg2023">(<a href="#ref-rajeg2023" role="doc-biblioref">Rajeg, 2023b</a>)</span>; this is also available online as a webpage at <a href="https://engganolang.github.io/digitised-holle-list/" class="uri">https://engganolang.github.io/digitised-holle-list/</a>. The joining of the translations in the digitalised NBL into the regional list data is via the matching keys, viz.&nbsp;the index numbers. This digitalised NBL (in a tab-separated plain-text file) has first been implemented in joining (i) the (also digitalised) regional word list for Enggano with (ii) the corresponding Dutch, English, and Indonesian glosses in the master Holle List <span class="citation" data-cites="rajeg2023eno rajeg2025">(<a href="#ref-rajeg2023eno" role="doc-biblioref">Rajeg, 2023a</a>; <a href="#ref-rajeg2025" role="doc-biblioref">Rajeg et al., 2025</a>)</span>.</p>
+<p>Building on the Enggano research, the current project envisages computational matching between the NBL and all words from the remaining regional languages in the Holle List. To achieve this, the first step is to digitalise the other regional languages from the PDF files into plain texts. Since there are more than one hundred regional lists (comprising ten volumes) in the Holle List, we need to scale-up the digitalisation process.</p>
+<p>This paper leverages a cloud computing platform, that is “Google Colaboratory” (<a href="https://colab.google/" class="uri">https://colab.google/</a>) <span class="citation" data-cites="google2026">(<a href="#ref-google2026" role="doc-biblioref">Google, 2026</a>)</span>, to handle the computational resources (such as the Central Processing Unit and Memory) to run a large-scale digitalisation process of many PDF files into plain-text file. The software that performs the remediation from PDF to plain text is the <em>Tesseract</em> O(ptical) C(haracter) R(ecognition) engine <span class="citation" data-cites="smith2007">(<a href="#ref-smith2007" role="doc-biblioref">Smith, 2007</a>)</span> (see <a href="#sec-data-source-processing" class="quarto-xref">§&nbsp;2.2</a> for further details). Once the digitalisation output of the regional lists has been checked, edited for errors (cf. <a href="#sec-discussion" class="quarto-xref">§&nbsp;4</a> esp.&nbsp;in <a href="#tbl-correction-sample" class="quarto-xref">Table&nbsp;2</a>), and tagged to separate each language in the source PDF file (<a href="#fig-borneo-tag" class="quarto-xref">Figure&nbsp;11</a>), it is possible to computationally collate what was two-parts paper-based publications into a digital cross-linguistic lexical database in which the words in the regional languages are matched with their corresponding Dutch, English, and Indonesian/Malay glosses (cf. <a href="#tbl-land" class="quarto-xref">Table&nbsp;3</a>).</p>
+<p>The future potentials of these large lexical data are diverse. It will open new possibilities for systematic computational historical linguistic analysis in finding relationships between languages <span class="citation" data-cites="lai2023">(<a href="#ref-lai2023" role="doc-biblioref">Lai &amp; List, 2023</a>)</span>. The database can also be used to study diachronic changes of the same language, combining older datasets with present-day datasets (where available) <span class="citation" data-cites="krauße rajeg2024">(<a href="#ref-krauße" role="doc-biblioref">Krauße et al., 2024</a>; <a href="#ref-rajeg2024" role="doc-biblioref">Rajeg et al., 2024</a>)</span>. In the area of lexical semantics, the database could be used to investigate collexification patterns <span class="citation" data-cites="clics2020 françois2008">(<a href="#ref-françois2008" role="doc-biblioref">François, 2008</a>; <a href="#ref-clics2020" role="doc-biblioref">Rzymski et al., 2020</a>)</span> (<a href="#tbl-land" class="quarto-xref">Table&nbsp;3</a>, <a href="#tbl-borneo-land" class="quarto-xref">Table&nbsp;4</a>). Last but not least, the database contributes to the preservation and empowerment of Indonesian regional languages, especially the older varieties, in the digital realm, corresponding to UNESCO’s <em>Digital Initiatives for Indigenous Languages</em> <span class="citation" data-cites="llanes-ortiz2023">(<a href="#ref-llanes-ortiz2023" role="doc-biblioref">Llanes-Ortiz, 2023</a>)</span>.</p>
+</section>
+<section id="sec-method" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="sec-method"><span class="header-section-number">2</span> Methodology</h2>
+<p>This section covers two main points. First, accessing the scanned Holle List publications in PDFs (<a href="#sec-data-source-acquisition" class="quarto-xref">§&nbsp;2.1</a>). Second, the computational processing (i.e., the coding components) on Google Colab to remediate these PDFs into text files (<a href="#sec-data-source-processing" class="quarto-xref">§&nbsp;2.2</a>).</p>
+<section id="sec-data-source-acquisition" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="sec-data-source-acquisition"><span class="header-section-number">2.1</span> Data source acquisition</h3>
+<p>The PDF files for all eleven volumes of the Holle List series are available as open access on the Open Research Repository of the Australian National University (ANU) library, under the <a href="https://openresearch-repository.anu.edu.au/collections/bbe2244b-212d-44b4-b33a-59048fd7e13f">“ANU Asia-Pacific Linguistics/Pacific Linguistics Press” collection</a>. The Holle List publications can be looked up using “Holle Lists” as the search term (see <a href="#fig-holle-list-search-output" class="quarto-xref">Figure&nbsp;2</a>).</p>
+<div id="fig-holle-list-search-output" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-holle-list-search-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="https://openresearch-repository.anu.edu.au/search?spc.page=1&amp;query=Holle%20Lists&amp;scope=bbe2244b-212d-44b4-b33a-59048fd7e13f"><img src="img/holle-list-search-results.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-holle-list-search-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: A snippet of the search results for the Holle List publications on the ANU Open Research Repository
+</figcaption>
+</figure>
+</div>
+<p>The PDF file for every volume was downloaded and uploaded onto the Google Drive of the Holle List project so that it can be accessed during processing in the Google Colab coding environment. This is explained next.</p>
+</section>
+<section id="sec-data-source-processing" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="sec-data-source-processing"><span class="header-section-number">2.2</span> Data processing</h3>
+<p>To use Google Colab, one only needs to sign up for a Google Account (if they do not already have one). After signing-in to one’s Google Account, go to <a href="https://colab.google/" class="uri">https://colab.google/</a> and choose the New Notebook option. A computational Jupyter Notebook will be created and stored in the Google Drive folder. This Notebook runs the Python programming language (see <a href="#fig-jupyter-notebook" class="quarto-xref">Figure&nbsp;3</a>). All computations for the digitalisation happened on this online, cloud computer on Google Colab.</p>
+<div id="fig-jupyter-notebook" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-jupyter-notebook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/google-collab-notebook-interface.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-jupyter-notebook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: A snippet of an interface of the Jupyter Notebook in Google Colab
+</figcaption>
+</figure>
+</div>
+<p>The codes shown in <a href="#fig-jupyter-notebook" class="quarto-xref">Figure&nbsp;3</a> are for installing relevant software in the remediation process from PDF into plain text. The <em>Tesseract OCR</em> engine (see the code <code>!sudo apt install tesseract-ocr</code>) as well as the Python package/module <em>pytesseract</em> <span class="citation" data-cites="hoffstaetter2024">(<a href="#ref-hoffstaetter2024" role="doc-biblioref">Hoffstaetter, 2024</a>)</span> were installed to allow access to <em>Tesseract</em> via Python. Before converting the PDF into plain text with the <em>pytesseract</em>, the PDF files must first be converted into images using the <code>pdf2image</code> module <span class="citation" data-cites="belval2024">(<a href="#ref-belval2024" role="doc-biblioref">Belval, 2024</a>)</span>.</p>
+<p>The next step is to load the necessary functionality from the installed modules for PDF-to-text conversion, including a function that allows access to the downloaded PDFs stored on Google Drive (cf. <a href="#fig-holle-list-search-output" class="quarto-xref">Figure&nbsp;2</a>). This is shown in <a href="#fig-module-load" class="quarto-xref">Figure&nbsp;4</a>.</p>
+<div id="fig-module-load" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-module-load-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/google-colab-module-load.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-module-load-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Loading the relevant functions from the installed modules
+</figcaption>
+</figure>
+</div>
+<p>After loading the relevant functions by executing codes in <a href="#fig-module-load" class="quarto-xref">Figure&nbsp;4</a>, we need to write custom Python codes for the digitalisation processes. An example is shown in <a href="#fig-python-ocr" class="quarto-xref">Figure&nbsp;5</a> for the processing of the regional Holle List vol.&nbsp;5/1 for the Papuan and Austronesian languages in the Digul Area, Irian Jaya/West Papua, Indonesia <span class="citation" data-cites="stokhof1982">(<a href="#ref-stokhof1982" role="doc-biblioref">Stokhof et al., 1982</a>)</span>.</p>
+<div id="fig-python-ocr" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-python-ocr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/google-colab-digitalisation.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-python-ocr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Custom Python codes for the digitalisation of the PDF into plain text
+</figcaption>
+</figure>
+</div>
+<p>Codes in the upper code block/box in <a href="#fig-python-ocr" class="quarto-xref">Figure&nbsp;5</a> deal with converting the PDF into images by providing the Google Drive path of the PDF.</p>
+<p>After that come the codes in the lower code block/box in <a href="#fig-python-ocr" class="quarto-xref">Figure&nbsp;5</a>. They cover three aspects. First, setting up the parameters or configuration for the output format of the plain text. Details can be found at <a href="https://tesseract-ocr.github.io/tessdoc/Command-Line-Usage.html" class="uri">https://tesseract-ocr.github.io/tessdoc/Command-Line-Usage.html</a>. Second, creating the main processing iteration to convert the images into a single text file. This is shown from the code line containing <code>for i, image in enumerate(images):</code> up until the line stating <code>full_text += "\n\n"</code>. Finally, saving the output into a plain text file; this file is stored on a Google Drive folder specified by the user. The code line shown in <a href="#fig-python-ocr" class="quarto-xref">Figure&nbsp;5</a> indicates that the output is saved with the file name <code>HolleList-Vol-5-1-Irian-Jaya.txt</code> under a folder for the Vol. 5/1, which is in turn inside the <code>hollelist</code> sub-folder in my main Google Drive folder (<code>MyDrive</code>) (see <a href="#fig-ocr-output" class="quarto-xref">Figure&nbsp;6</a>).</p>
+<div id="fig-ocr-output" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ocr-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/digitalisation-output.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ocr-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: A Google Drive folder containing the plain-text (.txt) output of the OCR operation for the PDF of the Holle List vol.&nbsp;5/1
+</figcaption>
+</figure>
+</div>
+<p>Note that writing the codes as presented in <a href="#fig-python-ocr" class="quarto-xref">Figure&nbsp;5</a> does not necessarily mean that the codes are automatically executed/instructed to produce the output. To run the codes inside a given code block, hover the cursor in the top-left area of the code block until a white rightward arrow (with black background) appears (see the point of the blue arrow in <a href="#fig-executing-code" class="quarto-xref">Figure&nbsp;7</a>), then click on that white arrow.</p>
+<div id="fig-executing-code" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-executing-code-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/google-colab-running-code.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-executing-code-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: The execution of the codes using the graphical user interface button or keyboard shortcut
+</figcaption>
+</figure>
+</div>
+<p>Alternatively, ensure the cursor is in the relevant code block and then use the keyboard shortcut <code>Ctrl+Enter</code> to execute the codes in that code block.</p>
+<p>As mentioned in <a href="#sec-intro" class="quarto-xref">§&nbsp;1</a>, the execution of these codes is not performed locally on our laptop but online on the cloud, using the Central Processing Unit (CPU) and memory provided by Google Colab. It is also important to note that the conversion processes from image files into plain texts for a given volume could take more than one hour. In this study, the processing times for digitalising each volume were not recorded because the primary goal is not to assess the efficiency and processing times.</p>
+</section>
+</section>
+<section id="sec-results" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="sec-results"><span class="header-section-number">3</span> Results</h2>
+<p>This section presents two sets of results from a single Holle List volume, namely vol.&nbsp;5/1 <span class="citation" data-cites="stokhof1982">(<a href="#ref-stokhof1982" role="doc-biblioref">Stokhof et al., 1982</a>)</span> for Austronesian and Papuan languages in the Digul area, Irian Jaya (West Papua), Indonesia. They were chosen to illustrate differences in the quality of the conversion output, depending on the nature of the input characters in the source PDF file. These two sets represent two different languages in that volume, namely Numfor <span class="citation" data-cites="stokhof1982">(<a href="#ref-stokhof1982" role="doc-biblioref">Stokhof et al., 1982, p. 17</a>)</span> and Digul Mappi (spoken in the area between the Digul River and the Mappi River) <span class="citation" data-cites="stokhof1982">(<a href="#ref-stokhof1982" role="doc-biblioref">Stokhof et al., 1982, p. 133</a>)</span>.</p>
+<p><a href="#fig-numfor-1" class="quarto-xref">Figure&nbsp;8 (a)</a> captures several words in Numfor in the PDF source file while <a href="#fig-numfor-2" class="quarto-xref">Figure&nbsp;8 (b)</a> shows their corresponding OCR conversion output in plain-text.</p>
+<div class="cell" data-layout-nrow="2" data-layout-align="center" data-fig-cap-location="bottom">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"img/numfor-pdf.png"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"img/numfor-txt.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-numfor" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-numfor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-numfor" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-numfor-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-numfor-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/numfor-pdf.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%" data-ref-parent="fig-numfor">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-numfor-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) the PDF source <span class="citation" data-cites="stokhof1982">(<a href="#ref-stokhof1982" role="doc-biblioref">Stokhof et al., 1982, p. 17</a>)</span>
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-numfor" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-numfor-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-numfor-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/numfor-txt.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%" data-ref-parent="fig-numfor">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-numfor-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) the plain-text output
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-numfor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Snippets of the PDF source for the Numfor list and its corresponding plain-text format after the image-to-text conversion
+</figcaption>
+</figure>
+</div>
+</div>
+<p>The pair in <a href="#fig-numfor" class="quarto-xref">Figure&nbsp;8</a> can now be contrasted with that for the Digul Mappi list in <a href="#fig-digulmappi" class="quarto-xref">Figure&nbsp;9</a>.</p>
+<div class="cell" data-layout-nrow="2" data-layout-align="center" data-fig-cap-location="bottom">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"img/digul-mappi-pdf.png"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"img/digul-mappi-txt.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-digulmappi" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-digulmappi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-digulmappi" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-digulmappi-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-digulmappi-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/digul-mappi-pdf.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%" data-ref-parent="fig-digulmappi">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-digulmappi-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) the PDF source <span class="citation" data-cites="stokhof1982">(<a href="#ref-stokhof1982" role="doc-biblioref">Stokhof et al., 1982, p. 133</a>)</span>
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-digulmappi" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-digulmappi-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-digulmappi-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/digul-mappi-txt.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%" data-ref-parent="fig-digulmappi">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-digulmappi-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) the plain-text output
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-digulmappi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Snippets of the PDF source for the Digul Mappi list and its corresponding plain-text format after the image-to-text conversion
+</figcaption>
+</figure>
+</div>
+</div>
+<p>In <a href="#sec-discussion" class="quarto-xref">§&nbsp;4</a>, these results will be discussed, tailored with a recent data publication of the Holle List vol.&nbsp;10/3 <span class="citation" data-cites="holle-list-barrier-islands">(<a href="#ref-holle-list-barrier-islands" role="doc-biblioref">Stokhof &amp; Almanar, 1987</a>)</span> when the master NBL has been joined with the regional words into a digital database.</p>
+</section>
+<section id="sec-discussion" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="sec-discussion"><span class="header-section-number">4</span> Discussion</h2>
+<p>Careful inspection of the result snippets in <a href="#fig-numfor" class="quarto-xref">Figure&nbsp;8</a> and <a href="#fig-digulmappi" class="quarto-xref">Figure&nbsp;9</a> reveal differences in output quality. The words shown for Numfor consist of standard alphabetic characters without diacritics. The OCR output for these words appears correct and closely resembles the source PDF without the need to edit them. In addition, the index numbers are rendered correctly.</p>
+<p>Let us now contrast that result with that for Digul Mappi in <a href="#fig-digulmappi" class="quarto-xref">Figure&nbsp;9</a>. The Digul Mappi words contain accented characters (i.e., those with diacritics). For example, the word for ‘body’ (ID no. 1) is <em>wòssò</em> in Digul Mappi. The OCR engine did not render or convert the character <code>ò</code> correctly. Hence, from <em>wòssò</em> (original) into <em>wdssd</em> in the OCR output (<a href="#fig-digulmappi-2" class="quarto-xref">Figure&nbsp;9 (b)</a>). A quick look at some other words containing <em>ò</em> in the list in <a href="#fig-digulmappi-1" class="quarto-xref">Figure&nbsp;9 (a)</a> suggests that these combined characters (o + ◌̀) are rendered into <em>d</em>:</p>
+<div class="cell" data-tbl-colwidths="[35,65]">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">tribble</span>(<span class="sc">~</span><span class="st">`</span><span class="at">Source PDF</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">Holle ID</span><span class="st">`</span>, <span class="sc">~</span><span class="st">`</span><span class="at">OCR output</span><span class="st">`</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">"_chabãnj**ò**_ ‘hair’"</span>, <span class="dv">6</span>, <span class="st">"_chabanj**d**_"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                <span class="st">"_soet**ò**_ ‘ear’"</span>, <span class="dv">9</span>, <span class="st">"_soet**d**_"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">"_soet**ò**t**ò**_ ‘earwax’"</span>, <span class="dv">10</span>, <span class="st">"_soet**d**t**d**_"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">"_k**ò**koe_ ‘belly’"</span>, <span class="dv">54</span>,  <span class="st">"_k**d**koe_"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                <span class="st">"_intaki**ò**_ ‘side’"</span>, <span class="dv">60</span>, <span class="st">"_intaki**d**_"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                <span class="st">"_**ò**goe_ ‘navel’"</span>, <span class="dv">61</span>, <span class="st">"_**d**goe_"</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(<span class="st">`</span><span class="at">Holle ID</span><span class="st">`</span>, <span class="at">.before =</span> <span class="st">`</span><span class="at">Source PDF</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate_wider_regex</span>(<span class="at">cols =</span> <span class="st">`</span><span class="at">Source PDF</span><span class="st">`</span>, </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">patterns =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">Source PDF</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"^[^ ]+"</span>, </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">" "</span>, </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">Gloss =</span> <span class="st">"[^ ]+"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(Gloss, <span class="at">.after =</span> <span class="st">`</span><span class="at">Holle ID</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-sample-error" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[35,65]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-sample-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: OCR rendering output of some words with <em>ò</em> in <a href="#fig-digulmappi" class="quarto-xref">Figure&nbsp;9</a>
+</figcaption>
+<div aria-describedby="tbl-sample-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Holle ID</th>
+<th style="text-align: left;">Gloss</th>
+<th style="text-align: left;">Source PDF</th>
+<th style="text-align: left;">OCR output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">‘hair’</td>
+<td style="text-align: left;"><em>chabãnj<strong>ò</strong></em></td>
+<td style="text-align: left;"><em>chabanj<strong>d</strong></em></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">‘ear’</td>
+<td style="text-align: left;"><em>soet<strong>ò</strong></em></td>
+<td style="text-align: left;"><em>soet<strong>d</strong></em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">‘earwax’</td>
+<td style="text-align: left;"><em>soet<strong>ò</strong>t<strong>ò</strong></em></td>
+<td style="text-align: left;"><em>soet<strong>d</strong>t<strong>d</strong></em></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">54</td>
+<td style="text-align: left;">‘belly’</td>
+<td style="text-align: left;"><em>k<strong>ò</strong>koe</em></td>
+<td style="text-align: left;"><em>k<strong>d</strong>koe</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">60</td>
+<td style="text-align: left;">‘side’</td>
+<td style="text-align: left;"><em>intaki<strong>ò</strong></em></td>
+<td style="text-align: left;"><em>intaki<strong>d</strong></em></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">61</td>
+<td style="text-align: left;">‘navel’</td>
+<td style="text-align: left;"><em><strong>ò</strong>goe</em></td>
+<td style="text-align: left;"><em><strong>d</strong>goe</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>With such a pattern from the snippet of the data in <a href="#tbl-sample-error" class="quarto-xref">Table&nbsp;1</a>, we might assume that all other occurrences of <em>ò</em> will be rendered as <em>d</em>. With that assumption, and to expedite correction, we might also be tempted to perform a global find-and-replace procedure: replacing all occurrences of <em>d</em> with <em>ò</em>. However, the assumption is not fully supported and a one-time find-and-replace procedure is probably not ideal.</p>
+<p>Consider another word in <a href="#fig-digulmappi-1" class="quarto-xref">Figure&nbsp;9 (a)</a> referring to ‘navel’ (ID no. 61), namely <em>mòṙěkiò</em>. The OCR output of this word shows that the two <em>ò</em>-s inside it are rendered differently: as <em>o</em> in the first syllable and as <em>d</em> in the penultimate syllable. What is more, <em>d</em> is not only the OCR rendering for <em>ò</em> in the original PDF, but also for the second <em>à</em> in the word <em>àssi<strong>à</strong>běgǐ</em> (ID no. 67) ‘buttocks’; this word is rendered as <em>Assi<strong>d</strong>bégi</em> in the OCR output (<a href="#fig-digulmappi-2" class="quarto-xref">Figure&nbsp;9 (b)</a>).</p>
+<p>With all these issues, the OCR output from image to text requires further <em>manual</em> verification and correction. Nevertheless, computational remediation from image to text on the cloud with <em>Tesseract</em> lets us obtain computationally searchable text data relatively quickly, rather than typing manually (cf.&nbsp;below). As we have seen from <a href="#fig-numfor" class="quarto-xref">Figure&nbsp;8</a>, typically the conversion works well for simple characters (i.e., without diacritics or without other formatting, like underscore). This means that we reduce the time and effort to re-type (or manually type) these well-recognised characters, with effort focused primarily on verifying accented characters<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>Even if we decided that we would perform the digitalisation task through manual typing, the result of the typing still needs further manual checking and editing for <em>human error</em> and/or inconsistencies. This is what was done for an on-going digitalisation work of the Holle List for the remaining Barrier Islands Languages<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> (other than Enggano), off the west coast of Sumatra <span class="citation" data-cites="rajegDigitisedAnnotatedHolle2025 holle-list-barrier-islands">(<a href="#ref-rajegDigitisedAnnotatedHolle2025" role="doc-biblioref">Rajeg &amp; Arka, 2024/2025</a>; <a href="#ref-holle-list-barrier-islands" role="doc-biblioref">Stokhof &amp; Almanar, 1987</a>)</span>. The results from students’ group project<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> <span class="citation" data-cites="rajeggroupwork">(<a href="#ref-rajeggroupwork" role="doc-biblioref">Rajeg &amp; Arka, 2025</a>)</span> to digitalise these lists as an introduction to <em>WeSay</em> were first processed, combined, and then manually checked on Google Spreadsheet for tracking changes <span class="citation" data-cites="fomin2006">(cf. <a href="#ref-fomin2006" role="doc-biblioref">Fomin &amp; Toner, 2006, p. 84</a>)</span>.</p>
+<p><a href="#tbl-correction-sample" class="quarto-xref">Table&nbsp;2</a> shows how tracking changes are organised as a table. The regional lexical items that were manually typed by students (<code>lx_all</code> column) are in a separate column from that containing the corrected forms (called <code>lx_all_correct</code>). The <code>ID</code> column refers to the Holle List index number and a separate column for its correction is also provided but not shown here.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># maindb &lt;- googlesheets4::read_sheet(ss = "https://docs.google.com/spreadsheets/d/1P-JontDvH4MjKZ4pdqxthjTovSajJLKX6y2rtpuO5sc/edit?usp=sharing",</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                                     col_types = c("cccccccccccicccccccccccccccllcccccccccccccc"),</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                                     na = "NA")</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># maindb |&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(lang_name, ID, lx_all, lx_all_correct) |&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::mutate(is_corrected = ifelse(lx_all_correct == "",</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                                       FALSE,</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#                                       TRUE)) |&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   readr::write_tsv("data/maindb_correction_data.tsv")</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># correction_sample &lt;- readr::read_tsv("data/maindb_correction_data.tsv") |&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(!is.na(lx_all_correct)) |&gt;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(!grepl("^add_", ID, perl = TRUE)) |&gt;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(grepl("^\\d+$", ID, perl = TRUE)) |&gt;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(!grepl("^\\d", lx_all, perl = TRUE)) |&gt;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::filter(!grepl("\\s", lx_all_correct, perl = TRUE)) |&gt; </span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::select(-is_corrected) |&gt;</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#   dplyr::slice_sample(n = 1, by = lang_name)</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># correction_sample |&gt;</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   readr::write_tsv("data/correction_sample.tsv")</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"data/correction_sample.tsv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>           <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">quote =</span> <span class="st">""</span>, <span class="at">comment.char =</span> <span class="st">""</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-correction-sample" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-correction-sample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: A sample of manually corrected lexical items from the languages of Barrier Islands in the Holle List
+</figcaption>
+<div aria-describedby="tbl-correction-sample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">lang_name</th>
+<th style="text-align: right;">ID</th>
+<th style="text-align: left;">lx_all</th>
+<th style="text-align: left;">lx_all_correct</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">salangsigule</td>
+<td style="text-align: right;">1259</td>
+<td style="text-align: left;">nifeu-eu</td>
+<td style="text-align: left;">nifieu-eu</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">semalur</td>
+<td style="text-align: right;">1060</td>
+<td style="text-align: left;">mamboeïh</td>
+<td style="text-align: left;">mamboeǐh</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sigulesalang</td>
+<td style="text-align: right;">1429</td>
+<td style="text-align: left;">adénaěn</td>
+<td style="text-align: left;">adénaĕn</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nias1905</td>
+<td style="text-align: right;">824</td>
+<td style="text-align: left;">onorafati</td>
+<td style="text-align: left;">onarafati</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">nias1911</td>
+<td style="text-align: right;">912</td>
+<td style="text-align: left;">dofi</td>
+<td style="text-align: left;">dôfi</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mentawai_nd</td>
+<td style="text-align: right;">536</td>
+<td style="text-align: left;">goêlai</td>
+<td style="text-align: left;">go͡elai</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>With that correction set-up, we can (i) compare the original and the edited version, as well as, (ii) for each language, quantify the proportion of manually entered items requiring correction versus those that are already correct. Such a quantification is visualised in <a href="#fig-error-check" class="quarto-xref">Figure&nbsp;10</a>.</p>
+<div class="cell fig-cap-location-bottom" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6" data-cap-location="bottom"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_tsv</span>(<span class="st">"data/maindb_correction_data.tsv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(lang_name, is_corrected) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(lang_name) <span class="sc">|&gt;</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">perc =</span> <span class="fu">round</span>(n<span class="sc">/</span><span class="fu">sum</span>(n) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(lang_name, dplyr<span class="sc">::</span><span class="fu">desc</span>(n)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">x =</span> lang_name, <span class="at">y =</span> perc,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">fill =</span> is_corrected)) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_text</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">label =</span> n),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">vjust =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"percentage"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">x =</span> <span class="st">"language label"</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">fill =</span> <span class="st">"is corrected?"</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">caption =</span> <span class="st">"Raw frequencies are numbers inside the bars"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-error-check" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-error-check-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="snbi2026-holle-list_files/figure-html/fig-error-check-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="3600">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-error-check-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Proportion of lexical items corrected after the manual digitalisation for the Holle List of the Barrier Islands Languages <span class="citation" data-cites="holle-list-barrier-islands">(<a href="#ref-holle-list-barrier-islands" role="doc-biblioref">Stokhof &amp; Almanar, 1987</a>)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Once the word list has been in digital form and corrected, they can be joined with their translations from the reference Holle List (or the <em>New Basic List</em>) (cf. <a href="#sec-intro" class="quarto-xref">§&nbsp;1</a>). Then, we can explore and computationally search across a set of languages (e.g., from a given volume of the Holle List) how a certain concept is expressed in these languages. An illustration will be given for languages of the Barrier Islands in Sumatra, Indonesia, whose manual digitalisation work has nearly been completed (pending further work for orthography standardisation and phonemic transliteration). Another example is given for languages of Kalimantan where the <em>Tesseract</em> OCR output can be processed computationally which is not feasible in PDF format.</p>
+<div class="cell">
+<div id="tbl-land" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-land-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Forms referring to ‘land’ as a physical landscape (ID 942) and as a state (ID 943) in the Holle List of the Barrier Islands Languages <span class="citation" data-cites="holle-list-barrier-islands">(<a href="#ref-holle-list-barrier-islands" role="doc-biblioref">Stokhof &amp; Almanar, 1987</a>)</span>
+</figcaption>
+<div aria-describedby="tbl-land-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 10%">
+<col style="width: 13%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">lang_name</th>
+<th style="text-align: left;">Index</th>
+<th style="text-align: left;">Forms</th>
+<th style="text-align: left;">English</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">lekon</td>
+<td style="text-align: left;">942/943</td>
+<td style="text-align: left;">angkal</td>
+<td style="text-align: left;">land [ID_942]; land (state) [ID_943]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tapah</td>
+<td style="text-align: left;">942/943</td>
+<td style="text-align: left;">angkal</td>
+<td style="text-align: left;">land [ID_942]; land (state) [ID_943]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">simalur</td>
+<td style="text-align: left;">942/943</td>
+<td style="text-align: left;">angkal</td>
+<td style="text-align: left;">land [ID_942]; land (state) [ID_943]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">seumalur1912</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">banoh</td>
+<td style="text-align: left;">land</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">seumalur1912</td>
+<td style="text-align: left;">943</td>
+<td style="text-align: left;">negri</td>
+<td style="text-align: left;">land (state)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sigule_salang1912</td>
+<td style="text-align: left;">942/943</td>
+<td style="text-align: left;">banoewàˈ</td>
+<td style="text-align: left;">land [ID_942]; land (state) [ID_943]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">salang_sigule1920</td>
+<td style="text-align: left;">942/943</td>
+<td style="text-align: left;">taneu</td>
+<td style="text-align: left;">land [ID_942]; land (state) [ID_943]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mentawai_nd</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">kapi</td>
+<td style="text-align: left;">land</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mentawai1933</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">boeggei</td>
+<td style="text-align: left;">land</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nias1905</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">tano̠</td>
+<td style="text-align: left;">land</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">nias1905</td>
+<td style="text-align: left;">943</td>
+<td style="text-align: left;">banoea</td>
+<td style="text-align: left;">land (state)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nias1911</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">reli danô</td>
+<td style="text-align: left;">land</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">nias1911</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">tanô</td>
+<td style="text-align: left;">land</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nias1911</td>
+<td style="text-align: left;">943</td>
+<td style="text-align: left;">banoea</td>
+<td style="text-align: left;">land (state)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">nias1911</td>
+<td style="text-align: left;">943</td>
+<td style="text-align: left;">ôri</td>
+<td style="text-align: left;">land (state)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nias1911</td>
+<td style="text-align: left;">943</td>
+<td style="text-align: left;">tanô</td>
+<td style="text-align: left;">land (state)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">enggano</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">ijokie</td>
+<td style="text-align: left;">land</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">enggano</td>
+<td style="text-align: left;">943</td>
+<td style="text-align: left;">èlŏpŏ</td>
+<td style="text-align: left;">land (state)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><a href="#tbl-land" class="quarto-xref">Table&nbsp;3</a> illustrates the joint database from the Barrier Islands Languages in the Holle List, filtered specifically for word-forms expressing the concept of LAND literally (ID 942) and metaphorically as a state (ID 943). It can be seen, for example, that Lekon, Tapah, and Simalur colexify <span class="citation" data-cites="françois2008 francoisLexicalTectonicsMapping2022">(<a href="#ref-françois2008" role="doc-biblioref">François, 2008, p. 170</a>; <a href="#ref-francoisLexicalTectonicsMapping2022" role="doc-biblioref">2022, p. 95</a>)</span> the concept of LAND as a physical landscape and as a state with a single form, namely <em>angkal</em>. Then, the two Sigule and Salang lists from two different periods of collection and publications also colexify these two concepts using two different forms in these two periods. Other languages, such as Nias, mainly distinguish between land as a physical landscape and land as a state. But, an interesting observation can be made about Nias as well. While in Nias 1905 data the form <em>tano̠</em> as well as its 1911 given form <em>tanô</em>, only refers to land literally (ID 942), the same form in 1911 (<em>tanô</em>) can also refer to land as a state; this might suggest a semantic extension of cognates for land as a physical landscape in diachronic varieties of Nias. This assumption needs further verification.</p>
+<p>The OCR output in plain-text format from running the <em>Tesseract</em> engine (<a href="#sec-data-source-processing" class="quarto-xref">§&nbsp;2.2</a>) can also be computationally (via programmatic coding) processed and searched for certain word forms. Before doing this, the output needs to be manually tagged for the language boundary in the text (see the yellow-highlighted line 120 in <a href="#fig-borneo-tag" class="quarto-xref">Figure&nbsp;11</a>). That is, which part of the output belongs to which language in the original PDF so that computationally we can write code to detect which form belongs to which language.</p>
+<div class="cell fig-cap-location-bottom" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-borneo-tag" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-borneo-tag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/borneo-lang-tag-01.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-borneo-tag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Snippet of grouping per-language word list using XML tag in the OCR output of a volume
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Once all languages in a volume have been tagged as in <a href="#fig-borneo-tag" class="quarto-xref">Figure&nbsp;11</a>, a programmatic script in R or Python can be designed to process and access the text file. <a href="#tbl-borneo-land" class="quarto-xref">Table&nbsp;4</a> shows the tabular output of extracting (with programmatic edit of the OCR output) word forms referring to land as a landscape (ID 942) and/or as a state (ID 943) in the Holle List for languages of Borneo/Kalimantan <span class="citation" data-cites="stokhofHolleListsVocabularies1986">(<a href="#ref-stokhofHolleListsVocabularies1986" role="doc-biblioref">Stokhof &amp; Almanar, 1986</a>)</span>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read_lines("https://raw.githubusercontent.com/Holle-List/holle-list-vol8-kalimantan/refs/heads/main/raw/PL-D69_Holle_List_Vol_8_Kalimantan-Borneo.txt") |&gt; </span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   write_lines("data/vol8.txt")</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># borneo &lt;- read_lines("data/vol8.txt")</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># grp_start &lt;- str_which(borneo, "\\&lt;group xml\\:lang")</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># grp_end &lt;- str_which(borneo, "\\&lt;\\/group\\&gt;")</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># borneo_split &lt;- map2(grp_start, grp_end, \(x, y) borneo[x:y])</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># names(borneo_split) &lt;- borneo_split |&gt; map_chr(`[`, 1) |&gt; str_extract("(?&lt;=xml\\:lang\\=\").+(?=\" xml\\:id)")</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># borneo_split |&gt; </span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   map(~str_subset(., "\\b942|\\b943")) |&gt; </span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   write_rds("data/borneo_split.rds")</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>borneo_land <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/borneo_split.rds"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"943. 1€p6'"</span>, <span class="st">"943. lěpo̊'"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"942</span><span class="sc">\\</span><span class="st">/"</span>, <span class="st">"942</span><span class="sc">\\</span><span class="st">/943. tanah"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"^943</span><span class="sc">\\</span><span class="st">. tanah$"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_subset</span>(., <span class="st">"</span><span class="sc">\\</span><span class="st">b942|</span><span class="sc">\\</span><span class="st">b943"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_extract</span>(., <span class="st">"(</span><span class="sc">\\</span><span class="st">b942</span><span class="sc">\\</span><span class="st">/943</span><span class="sc">\\</span><span class="st">b.</span><span class="sc">\\</span><span class="st">s[^ ]+?(</span><span class="sc">\\</span><span class="st">b| )|</span><span class="sc">\\</span><span class="st">b94[23]</span><span class="sc">\\</span><span class="st">b.</span><span class="sc">\\</span><span class="st">s[^ ]+?(</span><span class="sc">\\</span><span class="st">b| ))"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>()</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>borneo_no_land <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/borneo_split.rds"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"943. 1€p6'"</span>, <span class="st">"943. lěpo̊'"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"942</span><span class="sc">\\</span><span class="st">/"</span>, <span class="st">"942</span><span class="sc">\\</span><span class="st">/943. tanah"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"^943</span><span class="sc">\\</span><span class="st">. tanah$"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_subset</span>(., <span class="st">"</span><span class="sc">\\</span><span class="st">b942|</span><span class="sc">\\</span><span class="st">b943"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_extract</span>(., <span class="st">"(</span><span class="sc">\\</span><span class="st">b942</span><span class="sc">\\</span><span class="st">/943</span><span class="sc">\\</span><span class="st">b.</span><span class="sc">\\</span><span class="st">s[^ ]+?(</span><span class="sc">\\</span><span class="st">b| )|</span><span class="sc">\\</span><span class="st">b94[23]</span><span class="sc">\\</span><span class="st">b.</span><span class="sc">\\</span><span class="st">s[^ ]+?(</span><span class="sc">\\</span><span class="st">b| ))"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(\(x) x[<span class="fu">identical</span>(x, <span class="fu">character</span>(<span class="dv">0</span>))]) <span class="sc">|&gt;</span> </span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_title</span>()</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>borneo_land_to_print <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">lang_name =</span> <span class="fu">names</span>(borneo_land), <span class="at">Forms =</span> borneo_land) <span class="sc">|&gt;</span> </span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lang_name =</span> <span class="fu">str_to_title</span>(lang_name)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lang_name =</span> <span class="fu">str_replace</span>(lang_name, <span class="st">"</span><span class="sc">\\</span><span class="st">d$"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Forms =</span> <span class="fu">if_else</span>(lang_name <span class="sc">==</span> <span class="st">"Katingan Dayak"</span>, <span class="fu">str_replace</span>(Forms, <span class="st">"^943</span><span class="sc">\\</span><span class="st">. p.tak"</span>, <span class="st">"942/943. pètak"</span>), Forms)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="at">lang_name =</span> <span class="st">"Kenyah Dayak"</span>, <span class="at">Forms =</span> <span class="st">"942. tǎnà'"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Forms, <span class="fu">c</span>(<span class="at">Index =</span> <span class="st">"^[^ .]+"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">. "</span>, <span class="at">Forms =</span> <span class="st">".+"</span>))</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>additional_row <span class="ot">&lt;-</span> borneo_land_to_print <span class="sc">|&gt;</span> </span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">nrow</span>(borneo_land_to_print))</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>row_1_tgt <span class="ot">&lt;-</span> borneo_land_to_print <span class="sc">|&gt;</span> </span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>)</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>row_rest <span class="ot">&lt;-</span> borneo_land_to_print <span class="sc">|&gt;</span> </span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">8</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>borneo_land_to_print <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(row_1_tgt,</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>                                  additional_row,</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>                                  row_rest)</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>borneo_land_to_print <span class="sc">|&gt;</span> </span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>  <span class="co"># arrange(lang_name, Forms) |&gt; </span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-borneo-land" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-borneo-land-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Forms referring to ‘land’ as a physical landscape (ID 942) and as a state (ID 943) in the Holle List of the languages of Kalimantan (Borneo) vol.&nbsp;8 <span class="citation" data-cites="stokhofHolleListsVocabularies1986">(<a href="#ref-stokhofHolleListsVocabularies1986" role="doc-biblioref">Stokhof &amp; Almanar, 1986</a>)</span>
+</figcaption>
+<div aria-describedby="tbl-borneo-land-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">lang_name</th>
+<th style="text-align: left;">Index</th>
+<th style="text-align: left;">Forms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ot Danum Dayak</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">tana</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Banjar</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">daratan</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ngaju Dayak</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">petak</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Katingan Dayak</td>
+<td style="text-align: left;">942/943</td>
+<td style="text-align: left;">pètak</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Maanyan</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">tanae</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maanyan</td>
+<td style="text-align: left;">943</td>
+<td style="text-align: left;">tanae</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ulu Malay</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">daratan</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kenyah Dayak</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">tǎnà’</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kenyah Dayak</td>
+<td style="text-align: left;">943</td>
+<td style="text-align: left;">lěpo̊</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Penihing Dayak</td>
+<td style="text-align: left;">942/943</td>
+<td style="text-align: left;">tanah</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dialect Spoken In The West Kutei</td>
+<td style="text-align: left;">942</td>
+<td style="text-align: left;">darat</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>It is important to mention that not all languages/varieties represented in the Holle List vol.&nbsp;8 for Kalimantan contain forms referring to the concept of LAND in ID 942 and 943 (i.e., our programmatic search returned null results for these varieties with respect to these two IDs). These varieties are Martapura, Sekajang Dayak, Language Spoken In Matan, Unidentified (Semitau?). The reasons why they are not attested need further investigation.</p>
+</section>
+<section id="conclusion" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5</span> Conclusion</h2>
+<p>This paper reports on a project to digitalise the scanned PDF files of eleven volumes of the Holle List vocabulary <span class="citation" data-cites="holleli1980">(<a href="#ref-holleli1980" role="doc-biblioref">Stokhof, 1980</a>)</span> into plain texts that are both computationally searchable and manipulatable. The computational tools (the <em>Tesseract</em> OCR engine and its Python implementation) and resources (the Google Colab) used to achieve that have been discussed (<a href="#sec-method" class="quarto-xref">§&nbsp;2</a>). The aim here is to demonstrate how a paper-based, disjointed set of information relevant to the Humanities, especially Indigenous language preservation, can be re-conceptualised and re-mediated digitally for further uses. The issues arising from the automatic OCR output (<a href="#sec-discussion" class="quarto-xref">§&nbsp;4</a>) as well as from the manual typing of the list (<a href="#tbl-correction-sample" class="quarto-xref">Table&nbsp;2</a>) have also been described. We hope to have provided simple illustrations of the potential that the cross-linguistic database could offer once it is fully prepared in computer-searchable, digital format. One linguistic example that is presented is how the semantic concept of LAND as a physical landscape and as a state is lexicalised in languages of the Barrier Islands, Sumatra <span class="citation" data-cites="holle-list-barrier-islands">(vol.&nbsp;10/3 in <a href="#ref-holle-list-barrier-islands" role="doc-biblioref">Stokhof &amp; Almanar, 1987</a>)</span> (<a href="#tbl-land" class="quarto-xref">Table&nbsp;3</a>) and of the Kalimantan (Borneo) region <span class="citation" data-cites="stokhofHolleListsVocabularies1986">(vol.&nbsp;8 in <a href="#ref-stokhofHolleListsVocabularies1986" role="doc-biblioref">Stokhof &amp; Almanar, 1986</a>)</span> (<a href="#tbl-borneo-land" class="quarto-xref">Table&nbsp;4</a>). One caveat is that the regional language data in the Holle List represent the state of the language investigated circa the late 19<sup>th</sup> century and/or early 20<sup>th</sup> century. Other intricacies include variation of orthography/spelling between investigators of different languages and the need to standardise the Dutch orthography (e.g., the use of <em>oe</em> to refer to <em>/u/</em>), which is the future desideratum of this project.</p>
+</section>
+<section id="references" class="level2 unnumbered" data-number="6">
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">6 References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-belval2024" class="csl-entry" role="listitem">
+Belval, E. (2024). <em>Pdf2image: <span>A</span> wrapper around the pdftoppm and pdftocairo command line tools to convert <span>PDF</span> to a <span>PIL Image</span> list.</em> (Version 1.17.0) [Computer software]. <a href="https://badge.fury.io/py/pdf2image">https://badge.fury.io/py/pdf2image</a>
+</div>
+<div id="ref-donoho2017" class="csl-entry" role="listitem">
+Donoho, D. (2017). 50 years of data science. <em>Journal of Computational and Graphical Statistics</em>, <em>26</em>(4), 745–766. <a href="https://doi.org/10.1080/10618600.2017.1384734">https://doi.org/10.1080/10618600.2017.1384734</a>
+</div>
+<div id="ref-drucker2021" class="csl-entry" role="listitem">
+Drucker, J. (2021). <em>The <span>Digital Humanities</span> coursebook: <span>An</span> introduction to digital methods for research and scholarship</em>. Routledge. <a href="https://doi.org/10.4324/9781003106531">https://doi.org/10.4324/9781003106531</a>
+</div>
+<div id="ref-fomin2006" class="csl-entry" role="listitem">
+Fomin, M., &amp; Toner, G. (2006). Digitizing a dictionary of <span>Medieval Irish</span>: The <span class="nocase">eDIL Project</span>. <em>Literary and Linguistic Computing</em>, <em>21</em>(1), 83–90. <a href="https://doi.org/10.1093/llc/fqh050">https://doi.org/10.1093/llc/fqh050</a>
+</div>
+<div id="ref-françois2008" class="csl-entry" role="listitem">
+François, A. (2008). <em>Semantic maps and the typology of colexification: Intertwining polysemous networks across languages</em> (M. Vanhove, Ed.; pp. 163–215). John Benjamins Publishing Company. <a href="https://doi.org/10.1075/slcs.106.09fra">https://doi.org/10.1075/slcs.106.09fra</a>
+</div>
+<div id="ref-francoisLexicalTectonicsMapping2022" class="csl-entry" role="listitem">
+François, A. (2022). Lexical tectonics: <span>Mapping</span> structural change in patterns of lexification. <em>Zeitschrift Für Sprachwissenschaft</em>, <em>41</em>(1), 89–123. <a href="https://doi.org/10.1515/zfs-2021-2041">https://doi.org/10.1515/zfs-2021-2041</a>
+</div>
+<div id="ref-google2026" class="csl-entry" role="listitem">
+Google. (2026). <em>Google Colaboratory</em>. <a href="https://colab.google/">https://colab.google/</a>
+</div>
+<div id="ref-hoffstaetter2024" class="csl-entry" role="listitem">
+Hoffstaetter, S. (2024). <em><span class="nocase">pytesseract</span>: A python wrapper for <span class="nocase">Google’s Tesseract-OCR</span></em> (Version 0.3.13). <a href="https://pypi.org/project/pytesseract/">https://pypi.org/project/pytesseract/</a>
+</div>
+<div id="ref-holle1894" class="csl-entry" role="listitem">
+Holle, K. F. (1894). <em>Blanco woordenlijst</em>. Landsdrukkerij. <a href="https://hdl.handle.net/2027/coo.31924023363215">https://hdl.handle.net/2027/coo.31924023363215</a>
+</div>
+<div id="ref-krauße" class="csl-entry" role="listitem">
+Krauße, D., Rajeg, G. P. W., Pramartha, C. R. A., Zobel, E., Nothofer, B., Hemmings, C., Ogilvie, S., Arka, I. W., &amp; Dalrymple, M. (2024). <em>EnoLEX: A diachronic lexical database for the Enggano language</em>. <a href="https://doi.org/10.25446/oxford.28282169.v1">https://doi.org/10.25446/oxford.28282169.v1</a>
+</div>
+<div id="ref-lai2023" class="csl-entry" role="listitem">
+Lai, Y., &amp; List, J.-M. (2023). Lexical data for the historical comparison of Rgyalrongic languages. <em>Open Research Europe</em>, <em>3</em>, 99. <a href="https://doi.org/10.12688/openreseurope.16017.2">https://doi.org/10.12688/openreseurope.16017.2</a>
+</div>
+<div id="ref-llanes-ortiz2023" class="csl-entry" role="listitem">
+Llanes-Ortiz, G. (2023). <em>Digital initiatives for indigenous languages</em>. United Nations Educational, Scientific; Cultural Organization (UNESCO) &amp; STICHTING GLOBAL VOICES. <a href="https://unesdoc.unesco.org/ark:/48223/pf0000387186">https://unesdoc.unesco.org/ark:/48223/pf0000387186</a>
+</div>
+<div id="ref-rajeg2023eno" class="csl-entry" role="listitem">
+Rajeg, G. P. W. (2023a). <em>CLDF dataset of the Enggano word list from 1895 in Stokhof and Almanar’s (1987) Holle List</em>. <a href="https://doi.org/10.25446/oxford.23515788">https://doi.org/10.25446/oxford.23515788</a>
+</div>
+<div id="ref-rajeg2023" class="csl-entry" role="listitem">
+Rajeg, G. P. W. (2023b). <em>Digitised, searchable <span class="nocase">Holle List in Stokhof</span> (1980)</em>. <a href="https://doi.org/10.25446/oxford.23205173">https://doi.org/10.25446/oxford.23205173</a>
+</div>
+<div id="ref-rajeggroupwork" class="csl-entry" role="listitem">
+Rajeg, G. P. W., &amp; Arka, I. W. (2025). <em>Group <span>Work</span> in the <span>Lexicography Class</span> for the <span>Holle List</span> of the <span>Barrier Islands Languages</span> of <span>Indonesia</span></em> (Version 0.0.1) [Dataset]. <a href="https://doi.org/10.17605/OSF.IO/7TQG6">https://doi.org/10.17605/OSF.IO/7TQG6</a>
+</div>
+<div id="ref-rajegDigitisedAnnotatedHolle2025" class="csl-entry" role="listitem">
+Rajeg, G. P. W., &amp; Arka, I. W. (2025). <em>The digitised and annotated <span>Holle List</span> of the <span>Barrier Islands</span> languages, off the west coast of <span>Sumatra</span>, <span>Indonesia</span></em> [Dataset]. Open Science Framework (OSF). <a href="https://doi.org/10.17605/OSF.IO/P8A3R">https://doi.org/10.17605/OSF.IO/P8A3R</a> (Original work published 2024)
+</div>
+<div id="ref-rajeg2025" class="csl-entry" role="listitem">
+Rajeg, G. P. W., Arka, I. W., Pramartha, C. R. A., &amp; Sangian, E. Z. (2025). <em>The data science behind the curation of the <span>Holle List</span>: <span>A</span> case study from the <span>Enggano Holle List</span> and its neighbouring <span>Barrier Islands Languages</span></em> [Presentation]. Oceanic and <span>Southeast Asian Navigators</span> (<span>OCSEAN</span>) <span>Conference</span>, Faculty of Humanities, Udayana University. University of Oxford. <a href="https://doi.org/10.25446/oxford.29625407.v1">https://doi.org/10.25446/oxford.29625407.v1</a>
+</div>
+<div id="ref-rajeg2024" class="csl-entry" role="listitem">
+Rajeg, G. P. W., Krauße, D., &amp; Pramartha, C. (2024). <span>EnoLEX</span>: <span>A</span> diachronic lexical database for the <span>Enggano</span> language. In A. Inoue, N. Kawamoto, &amp; M. Sumiyoshi (Eds.), <em><span>AsiaLex</span> 2024 <span>Proceedings</span>: <span>Asian Lexicography</span> - <span>Merging</span> cutting-edge and established approaches</em> (pp. 123–132). <a href="https://doi.org/10.25446/oxford.27013864">https://doi.org/10.25446/oxford.27013864</a>
+</div>
+<div id="ref-clics2020" class="csl-entry" role="listitem">
+Rzymski, C., Tresoldi, T., Greenhill, S. J., Wu, M.-S., Schweikhard, N. E., Koptjevskaja-Tamm, M., Gast, V., Bodt, T. A., Hantgan, A., Kaiping, G. A., Chang, S., Lai, Y., Morozova, N., Arjava, H., Hübler, N., Koile, E., Pepper, S., Proos, M., Van Epps, B., … List, J.-M. (2020). The <span>Database</span> of <span>Cross-Linguistic Colexifications</span>, reproducible analysis of cross-linguistic polysemies. <em>Scientific Data</em>, <em>7</em>(1, 1), 13. <a href="https://doi.org/10.1038/s41597-019-0341-x">https://doi.org/10.1038/s41597-019-0341-x</a>
+</div>
+<div id="ref-smith2007" class="csl-entry" role="listitem">
+Smith, R. (2007). An <span>Overview</span> of the <span>Tesseract OCR Engine</span>. <em>Ninth <span>International Conference</span> on <span>Document Analysis</span> and <span>Recognition</span> (<span>ICDAR</span> 2007)</em>, <em>2</em>, 629–633. <a href="https://doi.org/10.1109/ICDAR.2007.4376991">https://doi.org/10.1109/ICDAR.2007.4376991</a>
+</div>
+<div id="ref-holleli1980" class="csl-entry" role="listitem">
+Stokhof, W. A. L. (Ed.). (1980). <em>Holle lists, vocabularies in languages of indonesia, vol. 1: Introductory volume: Vols. Materials in <span>Languages</span> of <span>Indonesia</span></em>. Dept. of Linguistics, Research School of Pacific Studies, The Australian National University. <a href="https://doi.org/10.15144/PL-D17">https://doi.org/10.15144/PL-D17</a>
+</div>
+<div id="ref-stokhofHolleListsVocabularies1986" class="csl-entry" role="listitem">
+Stokhof, W. A. L., &amp; Almanar, A. E. (Eds.). (1986). <em>Holle lists, vocabularies in languages of <span>Indonesia</span>, <span>Vol</span>. 8: <span>Kalimantan</span> (<span>Borneo</span>)</em>. Dept. of Linguistics, Research School of Pacific Studies, The Australian National University. <a href="https://doi.org/10.15144/PL-D69">https://doi.org/10.15144/PL-D69</a>
+</div>
+<div id="ref-holle-list-barrier-islands" class="csl-entry" role="listitem">
+Stokhof, W. A. L., &amp; Almanar, A. E. (Eds.). (1987). <em>Holle lists: Vocabularies in languages of indonesia, vol. 10/3: Islands off the west coast of sumatra: Vols. Materials in Languages of Indonesia</em>. Dept. of Linguistics, Research School of Pacific Studies, The Australian National University. <a href="http://hdl.handle.net/1885/144589">http://hdl.handle.net/1885/144589</a>
+</div>
+<div id="ref-stokhof1982" class="csl-entry" role="listitem">
+Stokhof, W. A. L., Saleh-Bronckhorst, L., &amp; Almanar, A. E. (Eds.). (1982). <em>Holle lists, vocabularies in languages of <span>Indonesia</span>, <span>Vol</span>. 5/1: <span>Irian Jaya</span>: <span>Austronesian</span> languages; <span>Papuan</span> languages, <span>Digul</span> area: Vols. Materials in <span>Languages</span> of <span>Indonesia</span></em>. Dept. of Linguistics, Research School of Pacific Studies, The Australian National University. <a href="http://hdl.handle.net/1885/144577">http://hdl.handle.net/1885/144577</a>
+</div>
+<div id="ref-wickham2023" class="csl-entry" role="listitem">
+Wickham, H., Çetinkaya-Rundel, M., &amp; Grolemund, G. (2023). <em>R for data science: Import, tidy, transform, visualize, and model data</em> (Second edition). O’Reilly. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>See these Holle List publication series <a href="https://openresearch-repository.anu.edu.au/search?spc.page=1&amp;query=Holle%20Lists&amp;scope=bbe2244b-212d-44b4-b33a-59048fd7e13f">on this page</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>At the moment, all OCR outputs for the Holle List are still in private repository of the Holle List GitHub (<a href="https://github.com/Holle-List" class="uri">https://github.com/Holle-List</a>) because the results need manual checking and editing.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>This work (i) continues a previous digitalisation sub-project of the Enggano Holle List (funded by the Arts and Humanities Research Council [Grant ID: <a href="https://gtr.ukri.org/projects?ref=AH%2FW007290%2F1" target="_blank">AH/W007290/1</a>] led by the University of Oxford, UK) and (ii) is now part of the Australian Research Council (ARC) research (Grant ID: <a href="https://dataportal.arc.gov.au/NCGP/Web/Grant/Grant/DP230102019" target="_blank">DP230102019</a>) on Languages of Barrier Islands in Sumatra, Indonesia (led by the Australian National University in Canberra, Australia).<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>The list of the students’ names contributing to this work and the languages they work on is available at <a href="https://github.com/complexico/lexico-holle-list-barrier-islands?tab=readme-ov-file#student-contributors" class="uri">https://github.com/complexico/lexico-holle-list-barrier-islands?tab=readme-ov-file#student-contributors</a>. They are also listed as the co-authors for the data publication for each language; access this information at <a href="https://github.com/complexico/holle-list-barrier-islands?tab=readme-ov-file#updates-from-students-contributions" class="uri">https://github.com/complexico/holle-list-barrier-islands?tab=readme-ov-file#updates-from-students-contributions</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
