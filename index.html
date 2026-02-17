@@ -652,7 +652,7 @@ Table&nbsp;2: A sample of manually corrected lexical items from the languages of
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">caption =</span> <span class="st">"Raw frequencies are numbers inside the bars"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-error-check" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom" data-fig-align="center">
+<div id="fig-error-check" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" data-cap-location="bottom">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-error-check-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="snbi2026-holle-list_files/figure-html/fig-error-check-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="3600">
@@ -666,6 +666,55 @@ Figure&nbsp;10: Proportion of lexical items corrected after the manual digitalis
 </div>
 <p>Once the word list has been in digital form and corrected, they can be joined with their translations from the reference Holle List (or the <em>New Basic List</em>) (cf. <a href="#sec-intro" class="quarto-xref">§&nbsp;1</a>). Then, we can explore and computationally search across a set of languages (e.g., from a given volume of the Holle List) how a certain concept is expressed in these languages. An illustration will be given for languages of the Barrier Islands in Sumatra, Indonesia, whose manual digitalisation work has nearly been completed (pending further work for orthography standardisation and phonemic transliteration). Another example is given for languages of Kalimantan where the <em>Tesseract</em> OCR output can be processed computationally which is not feasible in PDF format.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set wd to main holle list barrier islands</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># setwd("C:/Users/GRajeg/OneDrive - Nexus365/Documents/Research/barrier-island-Holle-list-2023-05-24/")</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># wl_files &lt;- dir("C:/Users/GRajeg/OneDrive - Nexus365/Documents/Research/barrier-island-Holle-list-2023-05-24/data-output", pattern = ".tsv", full.names = TRUE)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># lang_name &lt;- str_replace_all(basename(wl_files), "(\\.tsv|_tb)", "")</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># db &lt;- map(wl_files, read_tsv) |&gt; </span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   map(~select(., -1)) |&gt; </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   map2(.y = lang_name, \(x, y) mutate(x, lang_name = y)) |&gt; </span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   map(~mutate(., `v1931` = as.character(`v1931`))) |&gt; </span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   map(~relocate(., lang_name, .before = Index))</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># names(db) &lt;- lang_name</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># factor_order &lt;- c("lekon", "tapah", "simalur", "seumalur1912", "sigule_salang1912", "salang_sigule1920", "mentawai_nd", "mentawai1933", "nias1905", "nias1911")</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>enggano <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/engganolang/holle-list-enggano-1895/refs/heads/main/cldf/forms.csv"</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>enggano2 <span class="ot">&lt;-</span> enggano <span class="sc">|&gt;</span> </span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">Index =</span> Holle_ID,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">Forms =</span> Value,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>         English, Indonesian) <span class="sc">|&gt;</span> </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lang_name =</span> <span class="st">"enggano"</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co"># words meaning land and land as a state</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co"># db |&gt; </span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co">#   map(~filter(., list_type == "NBL")) |&gt; </span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co">#   map(~filter(., str_detect(Index, "^94[23]"))) |&gt; </span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="co">#   map(~select(., !matches("^nt_"))) |&gt; </span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co">#   list_rbind() |&gt; </span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co">#   select(lang_name, Index, Forms, English) |&gt; </span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(lang_name = factor(lang_name, levels = factor_order)) |&gt; </span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co">#   arrange(lang_name, Index, Forms) |&gt; </span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co">#   distinct() |&gt; </span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="co">#   write_rds("data/land.rds")</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>db_land <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/land.rds"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(enggano2 <span class="sc">|&gt;</span> </span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(<span class="fu">str_detect</span>(Index, <span class="st">"^94[23]"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="sc">-</span>Indonesian))</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>db_land <span class="sc">|&gt;</span> </span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="co"># return</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="co"># setwd("C:/Users/GRajeg/OneDrive - Nexus365/Documents/Research/snbi2026-holle-list")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div id="tbl-land" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-land-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -807,8 +856,12 @@ Table&nbsp;3: Forms referring to ‘land’ as a physical landscape (ID 942) and
 <p><a href="#tbl-land" class="quarto-xref">Table&nbsp;3</a> illustrates the joint database from the Barrier Islands Languages in the Holle List, filtered specifically for word-forms expressing the concept of LAND literally (ID 942) and metaphorically as a state (ID 943). It can be seen, for example, that Lekon, Tapah, and Simalur colexify <span class="citation" data-cites="françois2008 francoisLexicalTectonicsMapping2022">(<a href="#ref-françois2008" role="doc-biblioref">François, 2008, p. 170</a>; <a href="#ref-francoisLexicalTectonicsMapping2022" role="doc-biblioref">2022, p. 95</a>)</span> the concept of LAND as a physical landscape and as a state with a single form, namely <em>angkal</em>. Then, the two Sigule and Salang lists from two different periods of collection and publications also colexify these two concepts using two different forms in these two periods. Other languages, such as Nias, mainly distinguish between land as a physical landscape and land as a state. But, an interesting observation can be made about Nias as well. While in Nias 1905 data the form <em>tano̠</em> as well as its 1911 given form <em>tanô</em>, only refers to land literally (ID 942), the same form in 1911 (<em>tanô</em>) can also refer to land as a state; this might suggest a semantic extension of cognates for land as a physical landscape in diachronic varieties of Nias. This assumption needs further verification.</p>
 <p>The OCR output in plain-text format from running the <em>Tesseract</em> engine (<a href="#sec-data-source-processing" class="quarto-xref">§&nbsp;2.2</a>) can also be computationally (via programmatic coding) processed and searched for certain word forms. Before doing this, the output needs to be manually tagged for the language boundary in the text (see the yellow-highlighted line 120 in <a href="#fig-borneo-tag" class="quarto-xref">Figure&nbsp;11</a>). That is, which part of the output belongs to which language in the original PDF so that computationally we can write code to detect which form belongs to which language.</p>
 <div class="cell fig-cap-location-bottom" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8" data-cap-location="bottom"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"img/borneo-lang-tag-01.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<div id="fig-borneo-tag" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="bottom" data-fig-align="center">
+<div id="fig-borneo-tag" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" data-cap-location="bottom">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-borneo-tag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="img/borneo-lang-tag-01.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
@@ -824,59 +877,59 @@ Figure&nbsp;11: Snippet of grouping per-language word list using XML tag in the 
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read_lines("https://raw.githubusercontent.com/Holle-List/holle-list-vol8-kalimantan/refs/heads/main/raw/PL-D69_Holle_List_Vol_8_Kalimantan-Borneo.txt") |&gt; </span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   write_lines("data/vol8.txt")</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># borneo &lt;- read_lines("data/vol8.txt")</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># grp_start &lt;- str_which(borneo, "\\&lt;group xml\\:lang")</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># grp_end &lt;- str_which(borneo, "\\&lt;\\/group\\&gt;")</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># borneo_split &lt;- map2(grp_start, grp_end, \(x, y) borneo[x:y])</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># names(borneo_split) &lt;- borneo_split |&gt; map_chr(`[`, 1) |&gt; str_extract("(?&lt;=xml\\:lang\\=\").+(?=\" xml\\:id)")</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># borneo_split |&gt; </span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   map(~str_subset(., "\\b942|\\b943")) |&gt; </span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   write_rds("data/borneo_split.rds")</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>borneo_land <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/borneo_split.rds"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"943. 1€p6'"</span>, <span class="st">"943. lěpo̊'"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"942</span><span class="sc">\\</span><span class="st">/"</span>, <span class="st">"942</span><span class="sc">\\</span><span class="st">/943. tanah"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"^943</span><span class="sc">\\</span><span class="st">. tanah$"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_subset</span>(., <span class="st">"</span><span class="sc">\\</span><span class="st">b942|</span><span class="sc">\\</span><span class="st">b943"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_extract</span>(., <span class="st">"(</span><span class="sc">\\</span><span class="st">b942</span><span class="sc">\\</span><span class="st">/943</span><span class="sc">\\</span><span class="st">b.</span><span class="sc">\\</span><span class="st">s[^ ]+?(</span><span class="sc">\\</span><span class="st">b| )|</span><span class="sc">\\</span><span class="st">b94[23]</span><span class="sc">\\</span><span class="st">b.</span><span class="sc">\\</span><span class="st">s[^ ]+?(</span><span class="sc">\\</span><span class="st">b| ))"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>()</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>borneo_no_land <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/borneo_split.rds"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"943. 1€p6'"</span>, <span class="st">"943. lěpo̊'"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"942</span><span class="sc">\\</span><span class="st">/"</span>, <span class="st">"942</span><span class="sc">\\</span><span class="st">/943. tanah"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"^943</span><span class="sc">\\</span><span class="st">. tanah$"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_subset</span>(., <span class="st">"</span><span class="sc">\\</span><span class="st">b942|</span><span class="sc">\\</span><span class="st">b943"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_extract</span>(., <span class="st">"(</span><span class="sc">\\</span><span class="st">b942</span><span class="sc">\\</span><span class="st">/943</span><span class="sc">\\</span><span class="st">b.</span><span class="sc">\\</span><span class="st">s[^ ]+?(</span><span class="sc">\\</span><span class="st">b| )|</span><span class="sc">\\</span><span class="st">b94[23]</span><span class="sc">\\</span><span class="st">b.</span><span class="sc">\\</span><span class="st">s[^ ]+?(</span><span class="sc">\\</span><span class="st">b| ))"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(\(x) x[<span class="fu">identical</span>(x, <span class="fu">character</span>(<span class="dv">0</span>))]) <span class="sc">|&gt;</span> </span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_title</span>()</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>borneo_land_to_print <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">lang_name =</span> <span class="fu">names</span>(borneo_land), <span class="at">Forms =</span> borneo_land) <span class="sc">|&gt;</span> </span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lang_name =</span> <span class="fu">str_to_title</span>(lang_name)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lang_name =</span> <span class="fu">str_replace</span>(lang_name, <span class="st">"</span><span class="sc">\\</span><span class="st">d$"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Forms =</span> <span class="fu">if_else</span>(lang_name <span class="sc">==</span> <span class="st">"Katingan Dayak"</span>, <span class="fu">str_replace</span>(Forms, <span class="st">"^943</span><span class="sc">\\</span><span class="st">. p.tak"</span>, <span class="st">"942/943. pètak"</span>), Forms)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="at">lang_name =</span> <span class="st">"Kenyah Dayak"</span>, <span class="at">Forms =</span> <span class="st">"942. tǎnà'"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Forms, <span class="fu">c</span>(<span class="at">Index =</span> <span class="st">"^[^ .]+"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">. "</span>, <span class="at">Forms =</span> <span class="st">".+"</span>))</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>additional_row <span class="ot">&lt;-</span> borneo_land_to_print <span class="sc">|&gt;</span> </span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">nrow</span>(borneo_land_to_print))</span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>row_1_tgt <span class="ot">&lt;-</span> borneo_land_to_print <span class="sc">|&gt;</span> </span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>)</span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>row_rest <span class="ot">&lt;-</span> borneo_land_to_print <span class="sc">|&gt;</span> </span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">8</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>borneo_land_to_print <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(row_1_tgt,</span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>                                  additional_row,</span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>                                  row_rest)</span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>borneo_land_to_print <span class="sc">|&gt;</span> </span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>  <span class="co"># arrange(lang_name, Forms) |&gt; </span></span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read_lines("https://raw.githubusercontent.com/Holle-List/holle-list-vol8-kalimantan/refs/heads/main/raw/PL-D69_Holle_List_Vol_8_Kalimantan-Borneo.txt") |&gt; </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   write_lines("data/vol8.txt")</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># borneo &lt;- read_lines("data/vol8.txt")</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># grp_start &lt;- str_which(borneo, "\\&lt;group xml\\:lang")</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># grp_end &lt;- str_which(borneo, "\\&lt;\\/group\\&gt;")</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># borneo_split &lt;- map2(grp_start, grp_end, \(x, y) borneo[x:y])</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># names(borneo_split) &lt;- borneo_split |&gt; map_chr(`[`, 1) |&gt; str_extract("(?&lt;=xml\\:lang\\=\").+(?=\" xml\\:id)")</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># borneo_split |&gt; </span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   map(~str_subset(., "\\b942|\\b943")) |&gt; </span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   write_rds("data/borneo_split.rds")</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>borneo_land <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/borneo_split.rds"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"943. 1€p6'"</span>, <span class="st">"943. lěpo̊'"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"942</span><span class="sc">\\</span><span class="st">/"</span>, <span class="st">"942</span><span class="sc">\\</span><span class="st">/943. tanah"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"^943</span><span class="sc">\\</span><span class="st">. tanah$"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_subset</span>(., <span class="st">"</span><span class="sc">\\</span><span class="st">b942|</span><span class="sc">\\</span><span class="st">b943"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_extract</span>(., <span class="st">"(</span><span class="sc">\\</span><span class="st">b942</span><span class="sc">\\</span><span class="st">/943</span><span class="sc">\\</span><span class="st">b.</span><span class="sc">\\</span><span class="st">s[^ ]+?(</span><span class="sc">\\</span><span class="st">b| )|</span><span class="sc">\\</span><span class="st">b94[23]</span><span class="sc">\\</span><span class="st">b.</span><span class="sc">\\</span><span class="st">s[^ ]+?(</span><span class="sc">\\</span><span class="st">b| ))"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>()</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>borneo_no_land <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/borneo_split.rds"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"943. 1€p6'"</span>, <span class="st">"943. lěpo̊'"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"942</span><span class="sc">\\</span><span class="st">/"</span>, <span class="st">"942</span><span class="sc">\\</span><span class="st">/943. tanah"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_replace</span>(., <span class="st">"^943</span><span class="sc">\\</span><span class="st">. tanah$"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_subset</span>(., <span class="st">"</span><span class="sc">\\</span><span class="st">b942|</span><span class="sc">\\</span><span class="st">b943"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(<span class="sc">~</span><span class="fu">str_extract</span>(., <span class="st">"(</span><span class="sc">\\</span><span class="st">b942</span><span class="sc">\\</span><span class="st">/943</span><span class="sc">\\</span><span class="st">b.</span><span class="sc">\\</span><span class="st">s[^ ]+?(</span><span class="sc">\\</span><span class="st">b| )|</span><span class="sc">\\</span><span class="st">b94[23]</span><span class="sc">\\</span><span class="st">b.</span><span class="sc">\\</span><span class="st">s[^ ]+?(</span><span class="sc">\\</span><span class="st">b| ))"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(\(x) x[<span class="fu">identical</span>(x, <span class="fu">character</span>(<span class="dv">0</span>))]) <span class="sc">|&gt;</span> </span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_title</span>()</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>borneo_land_to_print <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">lang_name =</span> <span class="fu">names</span>(borneo_land), <span class="at">Forms =</span> borneo_land) <span class="sc">|&gt;</span> </span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lang_name =</span> <span class="fu">str_to_title</span>(lang_name)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lang_name =</span> <span class="fu">str_replace</span>(lang_name, <span class="st">"</span><span class="sc">\\</span><span class="st">d$"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Forms =</span> <span class="fu">if_else</span>(lang_name <span class="sc">==</span> <span class="st">"Katingan Dayak"</span>, <span class="fu">str_replace</span>(Forms, <span class="st">"^943</span><span class="sc">\\</span><span class="st">. p.tak"</span>, <span class="st">"942/943. pètak"</span>), Forms)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="at">lang_name =</span> <span class="st">"Kenyah Dayak"</span>, <span class="at">Forms =</span> <span class="st">"942. tǎnà'"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(Forms, <span class="fu">c</span>(<span class="at">Index =</span> <span class="st">"^[^ .]+"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">. "</span>, <span class="at">Forms =</span> <span class="st">".+"</span>))</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>additional_row <span class="ot">&lt;-</span> borneo_land_to_print <span class="sc">|&gt;</span> </span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">nrow</span>(borneo_land_to_print))</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>row_1_tgt <span class="ot">&lt;-</span> borneo_land_to_print <span class="sc">|&gt;</span> </span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>)</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>row_rest <span class="ot">&lt;-</span> borneo_land_to_print <span class="sc">|&gt;</span> </span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">8</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>borneo_land_to_print <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(row_1_tgt,</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>                                  additional_row,</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>                                  row_rest)</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>borneo_land_to_print <span class="sc">|&gt;</span> </span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>  <span class="co"># arrange(lang_name, Forms) |&gt; </span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div id="tbl-borneo-land" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
