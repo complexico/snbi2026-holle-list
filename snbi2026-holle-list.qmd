@@ -310,7 +310,7 @@ readr::read_tsv("data/maindb_correction_data.tsv") |>
 
 Once the word list has been in digital form and corrected, they can be joined with their translations from the reference Holle List (or the *New Basic List*) (cf. @sec-intro). Then, we can explore and computationally search across a set of languages (e.g., from a given volume of the Holle List) how a certain concept is expressed in these languages. An illustration will be given for languages of the Barrier Islands in Sumatra, Indonesia, whose manual digitalisation work has nearly been completed (pending further work for orthography standardisation and phonemic transliteration). Another example is given for languages of Kalimantan where the *Tesseract* OCR output can be processed computationally which is not feasible in PDF format.
 
-```{r message=FALSE, warning=FALSE, echo=FALSE}
+```{r message=FALSE, warning=FALSE}
 #| label: tbl-land
 #| tbl-cap: "Forms referring to ‘land’ as a physical landscape (ID 942) and as a state (ID 943) in the Holle List of the Barrier Islands Languages [@holle-list-barrier-islands]"
 
@@ -373,7 +373,6 @@ The OCR output in plain-text format from running the *Tesseract* engine (@sec-da
 #| fig-cap: "Snippet of grouping per-language word list using XML tag in the OCR output of a volume"
 #| fig-cap-location: bottom
 #| fig-align: center
-#| echo: false
 #| out-width: "80%"
 
 knitr::include_graphics("img/borneo-lang-tag-01.png")
