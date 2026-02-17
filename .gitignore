@@ -9,3 +9,5 @@ snbi2026-holle-list_files/
 *.pdf
 data/vol8.txt
 _extensions*
+/.quarto/
+/_site/
