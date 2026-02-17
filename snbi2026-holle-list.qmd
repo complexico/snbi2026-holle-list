@@ -80,6 +80,7 @@ citation:
   event-date: 2026-02-20
   available-date: 2026-02-17
   citation-label: RajegHolleList2026
+  url: https://complexico.github.io/snbi2026-holle-list/
   version: 1.0.0
 ---
 

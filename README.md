@@ -13,6 +13,10 @@ Please cite this repository as follows (in APA):
 
 > Rajeg, G. P. W. (2026). Supplementary materials for “The Digitised Holle List Project: Building a Database from Legacy Materials for Conserving Indigenous Indonesian Languages” (Version 1.0.0) [Computer software]. https://github.com/complexico/snbi2026-holle-list https://doi.org/10.17605/OSF.IO/G8JPD
 
+The webpage version of the submitted paper is available open access [here](https://complexico.github.io/snbi2026-holle-list/) and can be cited as follows:
+
+> Rajeg, G. P. W. (2026). The Digitised Holle List Project: Building a Database from Legacy Materials for Conserving Indigenous Indonesian Languages. In _Proceedings of Seminar Nasional Bahasa Ibu (SNBI) XVIII 2026_. https://doi.org/10.17605/OSF.IO/G8JPD https://complexico.github.io/snbi2026-holle-list/
+
 ## Overview
 
 The repository for the source Quarto document, interweaving texts and R codes, as well as the data files for the writing of a proceeding paper titled “The Digitised Holle List Project: Building a Database from Legacy Materials for Conserving Indigenous Indonesian Languages” to be presented at [_Seminar Nasional Bahasa Ibu (SNBI) XVIII 2026_](https://snbi2025.my.canva.site/).
