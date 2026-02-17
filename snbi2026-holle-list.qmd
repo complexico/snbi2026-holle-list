@@ -78,6 +78,7 @@ citation:
   event-title: Seminar Nasional Bahasa Ibu (SNBI) XVIII
   event-place: Denpasar, Bali, Indonesia
   event-date: 2026-02-20
+  doi: 10.5281/zenodo.18667726
   available-date: 2026-02-17
   citation-label: RajegHolleList2026
   url: https://complexico.github.io/snbi2026-holle-list/

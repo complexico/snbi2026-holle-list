@@ -4,14 +4,14 @@
 
 [Gede Primahadi Wijaya Rajeg](https://orcid.org/0000-0002-2047-8621)
 
-[![](https://img.shields.io/badge/OSF-10.17605/OSF.IO/G8JPD-green.svg)](https://doi.org/10.17605/OSF.IO/G8JPD)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18667726.svg)](https://doi.org/10.5281/zenodo.18667726) [![](https://img.shields.io/badge/OSF-10.17605/OSF.IO/G8JPD-green.svg)](https://doi.org/10.17605/OSF.IO/G8JPD)
 
 
 ## How to cite
 
 Please cite this repository as follows (in APA):
 
-> Rajeg, G. P. W. (2026). Supplementary materials for “The Digitised Holle List Project: Building a Database from Legacy Materials for Conserving Indigenous Indonesian Languages” (Version 1.0.0) [Computer software]. https://github.com/complexico/snbi2026-holle-list https://doi.org/10.17605/OSF.IO/G8JPD
+> Rajeg, G. P. W. (2026). Supplementary materials for “The Digitised Holle List Project: Building a Database from Legacy Materials for Conserving Indigenous Indonesian Languages” (Version 1.0.0) [Computer software]. https://github.com/complexico/snbi2026-holle-list https://doi.org/10.5281/zenodo.18667726
 
 The webpage version of the submitted paper is available open access [here](https://complexico.github.io/snbi2026-holle-list/) and can be cited as follows:
 
