@@ -314,25 +314,25 @@ Once the word list has been in digital form and corrected, they can be joined wi
 
 ```{r message=FALSE, warning=FALSE}
 #| label: tbl-land
-#| tbl-cap: "Forms referring to ‘land’ as a physical landscape (ID 942) and as a state (ID 943) in the Holle List of the Barrier Islands Languages [@holle-list-barrier-islands]"
+#| tbl-cap: "Forms referring to ‘land’ as a physical landscape opposing the sea (ID 942), as a state (ID 943), and as a country (ID 326) in the Holle List of the Barrier Islands Languages [@holle-list-barrier-islands]"
 
 
 # set wd to main holle list barrier islands
 # setwd("C:/Users/GRajeg/OneDrive - Nexus365/Documents/Research/barrier-island-Holle-list-2023-05-24/")
 
-# wl_files <- dir("C:/Users/GRajeg/OneDrive - Nexus365/Documents/Research/barrier-island-Holle-list-2023-05-24/data-output", pattern = ".tsv", full.names = TRUE)
-# 
-# lang_name <- str_replace_all(basename(wl_files), "(\\.tsv|_tb)", "")
-# 
-# db <- map(wl_files, read_tsv) |> 
-#   map(~select(., -1)) |> 
-#   map2(.y = lang_name, \(x, y) mutate(x, lang_name = y)) |> 
-#   map(~mutate(., `v1931` = as.character(`v1931`))) |> 
-#   map(~relocate(., lang_name, .before = Index))
-# 
-# names(db) <- lang_name
-# 
-# factor_order <- c("lekon", "tapah", "simalur", "seumalur1912", "sigule_salang1912", "salang_sigule1920", "mentawai_nd", "mentawai1933", "nias1905", "nias1911")
+wl_files <- dir("C:/Users/GRajeg/OneDrive - Nexus365/Documents/Research/barrier-island-Holle-list-2023-05-24/data-output", pattern = ".tsv", full.names = TRUE)
+
+lang_name <- str_replace_all(basename(wl_files), "(\\.tsv|_tb)", "")
+
+db <- map(wl_files, read_tsv) |>
+  map(~select(., -1)) |>
+  map2(.y = lang_name, \(x, y) mutate(x, lang_name = y)) |>
+  map(~mutate(., `v1931` = as.character(`v1931`))) |>
+  map(~relocate(., lang_name, .before = Index))
+
+names(db) <- lang_name
+
+factor_order <- c("lekon", "tapah", "simalur", "seumalur1912", "sigule_salang1912", "salang_sigule1920", "mentawai_nd", "mentawai1933", "nias1905", "nias1911")
 
 enggano <- readr::read_csv("https://raw.githubusercontent.com/engganolang/holle-list-enggano-1895/refs/heads/main/cldf/forms.csv")
 
@@ -344,21 +344,22 @@ enggano2 <- enggano |>
 
 # words meaning land and land as a state
 
-# db |> 
-#   map(~filter(., list_type == "NBL")) |> 
-#   map(~filter(., str_detect(Index, "^94[23]"))) |> 
-#   map(~select(., !matches("^nt_"))) |> 
-#   list_rbind() |> 
-#   select(lang_name, Index, Forms, English) |> 
-#   mutate(lang_name = factor(lang_name, levels = factor_order)) |> 
-#   arrange(lang_name, Index, Forms) |> 
-#   distinct() |> 
-#   write_rds("data/land.rds")
+db |>
+  map(~filter(., list_type == "NBL")) |>
+  map(~filter(., str_detect(Index, "^(94[23]|326)"))) |>
+  map(~select(., !matches("^nt_"))) |>
+  list_rbind() |>
+  select(lang_name, Index, Forms, English, Indonesian) |>
+  mutate(lang_name = factor(lang_name, levels = factor_order)) |>
+  arrange(lang_name, Index, Forms) |>
+  distinct() |>
+  write_rds("data/land_incl_326.rds")
 
-db_land <- read_rds("data/land.rds") |> 
+db_land <- read_rds("data/land_incl_326.rds") |> 
   bind_rows(enggano2 |> 
-              filter(str_detect(Index, "^94[23]")) |> 
-              select(-Indonesian))
+              filter(str_detect(Index, "^(94[23]|326)")) #|> 
+              # select(-Indonesian)
+              )
 db_land |> 
   knitr::kable()
 
@@ -366,7 +367,11 @@ db_land |>
 # setwd("C:/Users/GRajeg/OneDrive - Nexus365/Documents/Research/snbi2026-holle-list")
 ```
 
-@tbl-land illustrates the joint database from the Barrier Islands Languages in the Holle List, filtered specifically for word-forms expressing the concept of LAND literally (ID 942) and metaphorically as a state (ID 943). It can be seen, for example, that Lekon, Tapah, and Simalur colexify [@françois2008, 170; @francoisLexicalTectonicsMapping2022, 95] the concept of LAND as a physical landscape and as a state with a single form, namely *angkal*. Then, the two Sigule and Salang lists from two different periods of collection and publications also colexify these two concepts using two different forms in these two periods. Other languages, such as Nias, mainly distinguish between land as a physical landscape and land as a state. But, an interesting observation can be made about Nias as well. While in Nias 1905 data the form *tano̠* as well as its 1911 given form *tanô*, only refers to land literally (ID 942), the same form in 1911 (*tanô*) can also refer to land as a state; this might suggest a semantic extension of cognates for land as a physical landscape in diachronic varieties of Nias. This assumption needs further verification.
+@tbl-land illustrates the joint database from the Barrier Islands Languages in the Holle List, filtered specifically for word-forms expressing the concept of LAND literally (opposing the sea) (ID 942) and metaphorically as a state and a country respectively (IDs 943 and 326)[^6]. It can be seen, for example, that Lekon, Tapah, and Simalur colexify [@françois2008, 170; @francoisLexicalTectonicsMapping2022, 95] the concept of LAND as a physical landscape (in contrast to sea) (ID 942) and as a state (ID 943) with a single form, namely *angkal*. Yet, interestingly, these three languages have a different form (i.e., *banò*) to lexicalise ‘country’ (ID 326) (in Dutch elicitation given as *land (staat)*). *Banò* in Lekon, Tapah, and Simalur appears to be cognate with Seumalur (1912) *banoh* (but for ID 942 for land as a landscape), Sigule and Salang (1912) *banoewà'*, Salang and Sigule (1920) *banoea*, and Nias (1905, 1911) *banoea*.
+
+[^6]: The Dutch elicitation concepts for IDs 326 and 943 are the same, namely *land (staat)* (glossed as ‘country’ and ‘land (state)’ respectively in English and as ‘negara’ in Indonesian). Meanwhile, the Dutch elicitation concept for ID 942 is given as *land (in tegenstelling van zee)* (glossed as ‘land’ and ‘darat’ respectively in English and Indonesian).
+
+Then, the two Sigule and Salang lists from two different periods of collection and publications also colexify these two concepts (IDs 942 and 943) using two different forms in these two periods. Other languages, such as Nias in 1905, distinguish between land as a physical landscape (*tano̠*) and land as a state (ID 943) as well as a country (ID 326) (i.e., *banoea* respectively). An interesting observation can be made about Nias (1911). While in Nias 1905 data the form *tano̠* only refers to land (as an opposition to sea) (ID 942), the same form in 1911 (*tanô*) can also refer to land as a state (ID 943) as well as a country (ID 326); this might suggest a semantic extension of cognates for land as a physical landscape in diachronic varieties of Nias. This assumption needs further verification. Moreover, there is a new form lexicalising country or land (state) in Nias (1911), namely *ori*; this form did not exist in Nias (1905), suggesting a lexical expansion to express country or land/state in Nias (1911).
 
 The OCR output in plain-text format from running the *Tesseract* engine (@sec-data-source-processing) can also be computationally (via programmatic coding) processed and searched for certain word forms. Before doing this, the output needs to be manually tagged for the language boundary in the text (see the yellow-highlighted line 120 in @fig-borneo-tag). That is, which part of the output belongs to which language in the original PDF so that computationally we can write code to detect which form belongs to which language.
 
@@ -381,40 +386,44 @@ knitr::include_graphics("img/borneo-lang-tag-01.png")
 
 ```
 
-Once all languages in a volume have been tagged as in @fig-borneo-tag, a programmatic script in R or Python can be designed to process and access the text file. @tbl-borneo-land shows the tabular output of extracting (with programmatic edit of the OCR output) word forms referring to land as a landscape (ID 942) and/or as a state (ID 943) in the Holle List for languages of Borneo/Kalimantan [@stokhofHolleListsVocabularies1986].
+Once all languages in a volume have been tagged as in @fig-borneo-tag, a programmatic script in R or Python can be designed to process and access the text file. @tbl-borneo-land shows the tabular output of extracting (with programmatic edit of the OCR output) word forms referring to land as a landscape (ID 942) and/or as a state (ID 943) or country (ID 326) in the Holle List for languages of Borneo/Kalimantan [@stokhofHolleListsVocabularies1986].
 
 ```{r}
 #| label: tbl-borneo-land
-#| tbl-cap: "Forms referring to ‘land’ as a physical landscape (ID 942) and as a state (ID 943) in the Holle List of the languages of Kalimantan (Borneo) vol. 8 [@stokhofHolleListsVocabularies1986]"
+#| tbl-cap: "Forms referring to ‘land’ as a physical landscape (ID 942) and as a state/country (ID 943/ID 326) in the Holle List of the languages of Kalimantan (Borneo) vol. 8 [@stokhofHolleListsVocabularies1986]"
+#| message: false
+#| warning: false
 
 # read_lines("https://raw.githubusercontent.com/Holle-List/holle-list-vol8-kalimantan/refs/heads/main/raw/PL-D69_Holle_List_Vol_8_Kalimantan-Borneo.txt") |> 
 #   write_lines("data/vol8.txt")
 
-# borneo <- read_lines("data/vol8.txt")
-# grp_start <- str_which(borneo, "\\<group xml\\:lang")
-# grp_end <- str_which(borneo, "\\<\\/group\\>")
-# borneo_split <- map2(grp_start, grp_end, \(x, y) borneo[x:y])
-# names(borneo_split) <- borneo_split |> map_chr(`[`, 1) |> str_extract("(?<=xml\\:lang\\=\").+(?=\" xml\\:id)")
-# 
-# borneo_split |> 
-#   map(~str_subset(., "\\b942|\\b943")) |> 
-#   write_rds("data/borneo_split.rds")
+borneo <- read_lines("data/vol8.txt")
+grp_start <- str_which(borneo, "\\<group xml\\:lang")
+grp_end <- str_which(borneo, "\\<\\/group\\>")
+borneo_split <- map2(grp_start, grp_end, \(x, y) borneo[x:y])
+names(borneo_split) <- borneo_split |> map_chr(`[`, 1) |> str_extract("(?<=xml\\:lang\\=\").+(?=\" xml\\:id)")
+
+borneo_split |>
+  map(~str_subset(., "\\b942|\\b943|\\b326\\b")) |>
+  write_rds("data/borneo_split_with_326.rds")
 
 
-borneo_land <- read_rds("data/borneo_split.rds") |> 
+borneo_land <- read_rds("data/borneo_split_with_326.rds") |> 
   map(~str_replace(., "943. 1€p6'", "943. lěpo̊'")) |> 
   map(~str_replace(., "942\\/", "942\\/943. tanah")) |> 
+  map(~str_replace(., "(?<=\\b326\\. )tdna", "tǎnà")) |> 
   map(~str_replace(., "^943\\. tanah$", "")) |> 
-  map(~str_subset(., "\\b942|\\b943")) |> 
-  map(~str_extract(., "(\\b942\\/943\\b.\\s[^ ]+?(\\b| )|\\b94[23]\\b.\\s[^ ]+?(\\b| ))")) |> 
+  map(~str_subset(., "\\b942|\\b943|\\b326\\.")) |> 
+  map(~str_extract(., "(\\b942\\/943\\b.\\s[^ ]+?(\\b| )|\\b94[23]\\b.\\s[^ ]+?(\\b| )|\\b326\\.\\s[^ ]+?(\\b| ))")) |> 
   unlist()
 
-borneo_no_land <- read_rds("data/borneo_split.rds") |> 
-    map(~str_replace(., "943. 1€p6'", "943. lěpo̊'")) |> 
-    map(~str_replace(., "942\\/", "942\\/943. tanah")) |> 
-    map(~str_replace(., "^943\\. tanah$", "")) |> 
-    map(~str_subset(., "\\b942|\\b943")) |> 
-    map(~str_extract(., "(\\b942\\/943\\b.\\s[^ ]+?(\\b| )|\\b94[23]\\b.\\s[^ ]+?(\\b| ))")) |> 
+borneo_no_land <- read_rds("data/borneo_split_with_326.rds") |> 
+  map(~str_replace(., "943. 1€p6'", "943. lěpo̊'")) |> 
+  map(~str_replace(., "942\\/", "942\\/943. tanah")) |> 
+  map(~str_replace(., "(?<=\\b326\\. )tdna", "tǎnà")) |> 
+  map(~str_replace(., "^943\\. tanah$", "")) |> 
+  map(~str_subset(., "\\b942|\\b943|\\b326\\.")) |> 
+  map(~str_extract(., "(\\b942\\/943\\b.\\s[^ ]+?(\\b| )|\\b94[23]\\b.\\s[^ ]+?(\\b| )|\\b326\\.\\s[^ ]+?(\\b| ))")) |> 
   map(\(x) x[identical(x, character(0))]) |> 
   unlist() |> 
   names() |> 
@@ -430,19 +439,20 @@ borneo_land_to_print <- tibble(lang_name = names(borneo_land), Forms = borneo_la
 additional_row <- borneo_land_to_print |> 
   slice(nrow(borneo_land_to_print))
 row_1_tgt <- borneo_land_to_print |> 
-  slice(1:7)
+  slice(1:9)
 row_rest <- borneo_land_to_print |> 
-  slice(8:10)
+  slice(10:12)
 borneo_land_to_print <- bind_rows(row_1_tgt,
                                   additional_row,
                                   row_rest)
 
 borneo_land_to_print |> 
+  left_join(db_land |> select(Index, English, Indonesian) |> distinct()) |> 
   # arrange(lang_name, Forms) |> 
   knitr::kable()
 ```
 
-It is important to mention that not all languages/varieties represented in the Holle List vol. 8 for Kalimantan contain forms referring to the concept of LAND in ID 942 and 943 (i.e., our programmatic search returned null results for these varieties with respect to these two IDs). These varieties are `r borneo_no_land |> unique() |> str_c(collapse = ", ")`. The reasons why they are not attested need further investigation.
+It is important to mention that not all languages/varieties represented in the Holle List vol. 8 for Kalimantan contain forms referring to the concept of LAND in IDs 326, 942, and 943 (i.e., our programmatic search returned null results for these varieties with respect to these two IDs). These varieties are `r borneo_no_land |> unique() |> str_c(collapse = ", ")`. The reasons why they are not attested need further investigation.
 
 ## Conclusion
 
